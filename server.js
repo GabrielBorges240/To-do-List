@@ -8,17 +8,25 @@ const prisma = new PrismaClient();
 app.use(cors());
 app.use(express.json());
 
-// ---- Fazer migrations automaticamente ao iniciar ----
-async function runMigrations() {
+// ---- Servir o frontend (index.html + assets) ----
+const path = require('path');
+app.use(express.static(path.join(__dirname)));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// ---- Verificar conexão com o banco de dados ----
+async function verifyDatabaseConnection() {
   try {
-    await prisma.$executeRawUnsafe('SELECT 1');
+    await prisma.$connect();
     console.log('✅ Banco de dados conectado');
   } catch (error) {
     console.error('❌ Erro ao conectar ao banco:', error);
   }
 }
 
-runMigrations();
+verifyDatabaseConnection();
 
 app.get('/tasks', async (req, res) => {
   const tasks = await prisma.task.findMany();
@@ -54,4 +62,5 @@ app.delete('/tasks', async (req, res) => {
   res.json({ message: 'All tasks deleted' });
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
