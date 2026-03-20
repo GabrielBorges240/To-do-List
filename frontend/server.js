@@ -9,6 +9,11 @@ app.use(express.json());
 let tasks = [];
 let id = 1;
 
+// ROTA RAIZ
+app.get("/", (req, res) => {
+  res.send("API está funcionando 🚀");
+});
+
 // GET
 app.get("/tasks", (req, res) => {
   res.json(tasks);
@@ -55,8 +60,4 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log("Servidor rodando na porta", PORT);
-});
-
-app.get("/", (req, res) => {
-  res.send("API está funcionando 🚀");
 });
