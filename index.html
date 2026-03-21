@@ -1003,8 +1003,14 @@ async function addTask() {
   });
 
   const newTask = await res.json();
-  createTaskElement(newTask.text, newTask.completed, newTask.date, newTask.priority, newTask.id);
 
+createTaskElement(
+  newTask.text,
+  newTask.completed,
+  newTask.date,
+  newTask.priority,
+  newTask._id
+);
   taskInput.value = "";
   taskDate.value = "";
   updateCounter();
