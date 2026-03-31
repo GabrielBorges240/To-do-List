@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html>  
+<html lang="en-US">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -198,7 +198,13 @@ header {
   cursor: pointer;
 }
 
- 
+li {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* ✅ centraliza tudo */
+  text-align: center;
+  flex-direction: column; /* ✅ coloca em coluna */
+} 
 
 
 
@@ -246,7 +252,7 @@ header {
     border-radius: 8px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+     
     border: 1px solid var(--border);
     transition: all 0.4s;
     opacity: 0;
@@ -277,9 +283,9 @@ header {
   }
   /* --- fim do bloco --- */
 
-  .priority.baixa { background-color: #00c3ff; color: rgb(0, 0, 0); }
-  .priority.media { background-color: #ffc80d; color: rgb(0, 0, 0); }
-  .priority.alta  { background-color: #d00000; color: rgb(0, 0, 0); }
+  .priority.low { background-color: #00c3ff; color: rgb(0, 0, 0); }
+  .priority.medium { background-color: #ffc80d; color: rgb(0, 0, 0); }
+  .priority.high { background-color: #d00000; color: rgb(0, 0, 0); }
 
   .priority {
     font-size: 13px;
@@ -288,8 +294,13 @@ header {
     padding: 3px 8px;
     border-radius: 6px;
     text-transform: uppercase;
+    
   }
-
+#taskList li div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
   footer {
     text-align: center;
     padding: 20px;
@@ -311,6 +322,7 @@ input[type="checkbox"] {
   background-color: transparent;
 }
 
+
 /* Cor do checkbox marcado (modo escuro) */
 input[type="checkbox"]:checked {
   background: linear-gradient(90deg, var(--btn1), var(--btn2));
@@ -319,7 +331,7 @@ input[type="checkbox"]:checked {
 
 /* Cor do checkbox no tema claro (verde) */
 body.light input[type="checkbox"] {
-  border-color: var(--grad3);
+  border-color: var(--grad2);
 }
 
 body.light input[type="checkbox"]:checked {
@@ -752,6 +764,70 @@ li.show {
   opacity: 1;
   transform: translateY(0);
 }
+ 
+li {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* mantém o conteúdo no meio */
+  position: relative; /* necessário pro botão ficar fixo na esquerda */
+}
+
+/* botão X na esquerda */
+.delete-btn {
+  position: absolute;
+  left: 10px;
+}
+
+/* conteúdo centralizado */
+.task-wrapper {
+  text-align: center;
+}
+li {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* X na esquerda centralizado */
+.delete-btn {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* checkbox na direita centralizado */
+li input[type="checkbox"] {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+/* tamanho padrão pros dois */
+.delete-btn,
+li input[type="checkbox"] {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* botão X */
+.delete-btn {
+  font-size: 14px;
+  padding: 0;
+}
+
+/* checkbox */
+li input[type="checkbox"] {
+  width: 28px;
+  height: 28px;
+}
+.delete-btn:hover {
+  transform: scale(1.05) translateY(-50%);
+}
 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -764,20 +840,20 @@ li.show {
 
   <div id="customConfirm">
   <div class="box">
-    <h2>Tem certeza que deseja apagar todas as tarefas?</h2>
+    <h2>Are you sure?</h2>
     <div class="actions">
-      <button id="confirmYes">Sim</button>
-      <button id="confirmNo">Cancelar</button>
+      <button id="confirmYes">Yes</button>
+      <button id="confirmNo">Cancel </button>
     </div>
   </div>
 </div>
  
 
-  <div id="themeToggle" title="Trocar tema"></div>
+  <div id="themeToggle" title="Change theme"></div>
   </header>
 
   <div class="todo-container">
-    <div class="counter" id="taskCounter">Tarefas: 0 | Concluídas: 0</div>
+    <div class="counter" id="taskCounter">Tasks: 0 | Completed: 0</div>
 
     <div class="progress-bar-container">
       <div class="progress-bar" id="progressBar"></div>
@@ -786,23 +862,22 @@ li.show {
   
 
     <div class="input-area">
-      <input type="text" id="taskInput" placeholder="Digite uma tarefa...">
-     <input type="text" id="taskDate" placeholder="dd/mm/aaaa" inputmode="numeric" pattern="\d{2}/\d{2}/\d{4}">
-
+      <input type="text" id="taskInput" placeholder="Enter a task...">
+      
       <select id="prioritySelect">
-        <option value="baixa">Nível de prioridade: Baixa</option>
-        <option value="media">Nível de prioridade: Média</option>
-        <option value="alta">Nível de prioridade: Alta</option>
+        <option value="low">priority:  Low </option>
+        <option value="medium">priority:  Medium </option>
+        <option value="high">priority:  High  </option>
       </select>
-      <button id="addBtn">Adicionar</button>
-      <input type="text" id="searchInput" placeholder="  Buscar tarefa por nome ou data...">
+      <button id="addBtn">Add Task</button>
+      <input type="text" id="searchInput" placeholder="Search task by name or date...">
     </div>
 
     
     <ul id="taskList"></ul>
     <div class="botao-container">
-  <button id="clearAll" class="botao">Limpar Tudo</button>
-  <button id="exportCSV" class="botao">Exportar PDF</button>
+  <button id="clearAll" class="botao">Clear All</button>
+  <button id="exportCSV" class="botao">Export PDF</button>
     </div>
 
 
@@ -810,7 +885,7 @@ li.show {
 
    <footer>
     <p class="assinatura">
-      © <span class="nome">Gabriel Borges</span>. Todos os direitos reservados. • 2025
+      © <span class="nome">Gabriel Borges</span>. All rights reserved. • 2025
     </p>
   </footer>
 
@@ -822,7 +897,7 @@ li.show {
 const API_URL = "https://to-do-list-hr46.onrender.com/tasks";
 const addBtn = document.getElementById("addBtn");
 const taskInput = document.getElementById("taskInput");
-const taskDate = document.getElementById("taskDate");        // <---
+         // <---
 const taskList = document.getElementById("taskList");
 const clearAllBtn = document.getElementById("clearAll");
 const taskCounter = document.getElementById("taskCounter");
@@ -838,27 +913,7 @@ themeToggle.addEventListener("click", () => {
 });
 if (localStorage.getItem("theme") === "light") document.body.classList.add("light");
 
-// ---- Formatar data (DD/MM/YYYY) ----
-taskDate.addEventListener("input", (e) => {
-  let valor = e.target.value.replace(/\D/g, ""); // Remove tudo que não é número
-  
-  if (valor.length > 8) {
-    valor = valor.slice(0, 8); // Limita a 8 dígitos (DDMMYYYY)
-  }
-  
-  let formatado = "";
-  if (valor.length > 0) {
-    formatado = valor.slice(0, 2); // DD
-  }
-  if (valor.length > 2) {
-    formatado += "/" + valor.slice(2, 4); // MM
-  }
-  if (valor.length > 4) {
-    formatado += "/" + valor.slice(4, 8); // YYYY
-  }
-  
-  e.target.value = formatado;
-});
+ 
 
 // ---- Salvar tarefas no localStorage ----
 function salvarLocal(tasks) {
@@ -871,8 +926,14 @@ async function loadTasks() {
   const tasks = await res.json();
   taskList.innerHTML = "";
   tasks.forEach(task => {
-    createTaskElement(task.text, task.completed, task.date, task.priority, task.id);
-  });
+  createTaskElement(
+    task.text,
+    task.completed,
+    task.date,
+    task.priority,
+    task._id // 👈 CORRETO
+  );
+});
   updateCounter();
 }
 
@@ -880,13 +941,13 @@ async function loadTasks() {
 function updateCounter() {
   const total = document.querySelectorAll("#taskList li").length;
   const completed = document.querySelectorAll("#taskList li.completed").length;
-  taskCounter.textContent = `Tarefas: ${total} | Concluídas: ${completed}`;
+  taskCounter.textContent = `Tasks: ${total} | Completed: ${completed}`;
   const percent = total > 0 ? (completed / total) * 100 : 0;
   progressBar.style.width = percent + "%";
 }
-
+ 
 // ---- Cria elemento visual da tarefa ----
-function createTaskElement(text, completed = false, date = "", priority = "baixa", id = null) {
+function createTaskElement(text, completed = false, date = "", priority = "Low", id = null) {
   const li = document.createElement("li");
   li.dataset.priority = priority;
 
@@ -903,8 +964,8 @@ function createTaskElement(text, completed = false, date = "", priority = "baixa
   if (date) dateSpan.textContent = " " + date;
 
   const priorityTag = document.createElement("div");
-  priorityTag.textContent = `Prioridade: ${priority.toUpperCase()}`;
-  priorityTag.classList.add("priority", priority);
+priorityTag.textContent = `Priority: ${traduzirPrioridade[priority.toLowerCase()]}`;
+priorityTag.classList.add("priority", priority);
 
   taskLeft.append(checkbox, span, dateSpan, priorityTag);
   li.append(taskLeft);
@@ -922,11 +983,11 @@ function createTaskElement(text, completed = false, date = "", priority = "baixa
           body: JSON.stringify({ completed: checkbox.checked })
         });
       } catch (error) {
-        console.error("Erro ao atualizar tarefa:", error);
+        console.error("Error updating task:", error);
         // Reverter a mudança se falhar
         li.classList.toggle("completed", !checkbox.checked);
         checkbox.checked = !checkbox.checked;
-        mostrarAlertaCentral("Erro ao atualizar tarefa. Tente novamente.");
+        mostrarAlertaCentral("Error updating task. Please try again.");
         return;
       }
     }
@@ -965,36 +1026,13 @@ function salvarDoDOM() {
 
 // ---- Adicionar nova tarefa ----
 async function addTask() {
-
   const text = taskInput.value.trim();
-  let date = taskDate.value.trim();
   const priority = prioritySelect.value;
   if (!text) return;
 
-  // Validar e converter data DD/MM/YYYY para formato do banco
-  if (date) {
-    const partes = date.split("/");
-    if (partes.length !== 3 || partes[0].length !== 2 || partes[1].length !== 2 || partes[2].length !== 4) {
-      mostrarAlertaCentral("Data inválida! Use o formato DD/MM/YYYY");
-      return;
-    }
-    
-    const dia = parseInt(partes[0]);
-    const mes = parseInt(partes[1]);
-    const ano = parseInt(partes[2]);
-    
-    // Validar dia e mês
-    if (dia < 1 || dia > 31 || mes < 1 || mes > 12) {
-      mostrarAlertaCentral("Data inválida! Verifique dia e mês.");
-      return;
-    }
-    
-    // Validar ano (pelo menos 1900)
-    if (ano < 1900 || ano > 2100) {
-      mostrarAlertaCentral("Ano inválido! Use um ano entre 1900 e 2100.");
-      return;
-    }
-  }
+  const d = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const date = `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 
   const res = await fetch(API_URL, {
     method: "POST",
@@ -1004,18 +1042,17 @@ async function addTask() {
 
   const newTask = await res.json();
 
-createTaskElement(
-  newTask.text,
-  newTask.completed,
-  newTask.date,
-  newTask.priority,
-  newTask._id
-);
+  createTaskElement(
+    newTask.text,
+    newTask.completed,
+    newTask.date,
+    newTask.priority,
+    newTask._id
+  );
+
   taskInput.value = "";
-  taskDate.value = "";
   updateCounter();
 }
-
 // ---- Eventos ----
 addBtn.addEventListener("click", addTask);
 taskInput.addEventListener("keypress", e => { if (e.key === "Enter") addTask(); });
@@ -1047,7 +1084,7 @@ confirmNo.addEventListener("click", () => {
 exportCSVBtn.addEventListener("click", () => {
   const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
   if (savedTasks.length === 0) {
-    mostrarAlertaCentral("Nenhuma tarefa para exportar!");
+    mostrarAlertaCentral("No tasks to export!");
     return;
   }
 
@@ -1055,9 +1092,9 @@ exportCSVBtn.addEventListener("click", () => {
   const doc = new jsPDF();
 
   doc.setFontSize(18);
-  doc.text("Tarefas - To Do List", 14, 20);
+  doc.text("Tasks - To Do List", 14, 20);
   doc.setFontSize(12);
-  doc.text(`Exportado em: ${new Date().toLocaleDateString("pt-BR")}`, 14, 30);
+  doc.text(`Exported on: ${new Date().toLocaleDateString("en-US")}`, 14, 30);
 
   let y = 40;
 
@@ -1065,9 +1102,9 @@ exportCSVBtn.addEventListener("click", () => {
     doc.setFont("helvetica", "bold");
     doc.text(`${i + 1}. ${t.text}`, 14, y);
     doc.setFont("helvetica", "normal");
-    doc.text(`Status: ${t.completed ? " Concluída" : "Pendente"}`, 14, y + 6);
-    if (t.date) doc.text(`Data: ${t.date}`, 14, y + 12);
-    doc.text(`Prioridade: ${t.priority.toUpperCase()}`, 14, y + 18);
+    doc.text(`Status: ${t.completed ? " Completed" : " Pending"}`, 14, y + 6);
+    if (t.date) doc.text(`Date: ${t.date}`, 14, y + 12);
+    doc.text(`Priority: ${traduzirPrioridade[t.priority.toLowerCase()]}`, 14, y + 18);
     y += 28;
     if (y > 270) {
       doc.addPage();
@@ -1075,7 +1112,7 @@ exportCSVBtn.addEventListener("click", () => {
     }
   });
 
-  doc.save("tarefas.pdf");
+  doc.save("tasks.pdf");
 });
 
 // ---- Alerta central ----
@@ -1110,12 +1147,18 @@ searchInput.addEventListener("input", () => {
   });
 });
 
- 
+const traduzirPrioridade = { 
+  low: "LOW",
+  medium: "MEDIUM",
+  high: "HIGH"
+};
+
+
 
 // ---- Carregar tarefas ao iniciar ----
 window.addEventListener("load", loadTasks);
  
-setInterval(loadTasks, 5000);
+ 
 
 
 </script>
