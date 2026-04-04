@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-// CORS (corrigido)
+// CORS
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
@@ -13,7 +13,7 @@ app.use(cors({
 
 app.use(express.json({ limit: "10mb" }));
 
-// 🔗 CONEXÃO MONGODB (otimizada)
+// 🔗 CONEXÃO MONGODB
 mongoose.connect("mongodb+srv://By37LUKA22mst9aQ:dV1TDYf0dIWuqhXP@cluster0.wyhvpst.mongodb.net/todolist", {
   maxPoolSize: 10,
   minPoolSize: 5,
@@ -23,16 +23,17 @@ mongoose.connect("mongodb+srv://By37LUKA22mst9aQ:dV1TDYf0dIWuqhXP@cluster0.wyhvp
   .then(() => console.log("MongoDB conectado 🚀"))
   .catch(err => console.error("Erro MongoDB:", err));
 
-// Monitorar desconexões
 mongoose.connection.on("disconnected", () => {
   console.warn("⚠️ MongoDB desconectado. Tentando reconectar...");
 });
 
-// 📦 MODEL
+// 📦 MODEL — agora com category e dueDate
 const taskSchema = new mongoose.Schema({
-  text: { type: String, required: true, trim: true },
-  date: { type: String, default: "" },
-  priority: { type: String, default: "low", enum: ["low", "medium", "high"] },
+  text:      { type: String, required: true, trim: true },
+  date:      { type: String, default: "" },
+  priority:  { type: String, default: "low", enum: ["low", "medium", "high"] },
+  category:  { type: String, default: null },   // 🆕
+  dueDate:   { type: String, default: null },   // 🆕
   completed: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });
@@ -44,10 +45,19 @@ app.get("/", (req, res) => {
   res.send("API está funcionando 🚀");
 });
 
-// GET (Mongo) - com tratamento de erro
+// GET - ordenado: Alta → Média → Baixa, mais recente primeiro
 app.get("/tasks", async (req, res) => {
   try {
-    const tasks = await Task.find().lean(); // .lean() para melhor performance
+    const priorityOrder = { high: 3, medium: 2, low: 1 };
+    const tasks = await Task.find().lean();
+
+    tasks.sort((a, b) => {
+      const pa = priorityOrder[a.priority?.toLowerCase()] ?? 0;
+      const pb = priorityOrder[b.priority?.toLowerCase()] ?? 0;
+      if (pb !== pa) return pb - pa;
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+
     res.json(tasks);
   } catch (error) {
     console.error("Erro ao buscar tarefas:", error);
@@ -55,20 +65,24 @@ app.get("/tasks", async (req, res) => {
   }
 });
 
-// POST (Mongo) - com validação
+// POST - com category e dueDate
 app.post("/tasks", async (req, res) => {
   try {
-    const { text, date, priority } = req.body;
+    const { text, date, priority, category, dueDate } = req.body;
 
-    // Validação
     if (!text || text.trim().length === 0) {
       return res.status(400).json({ error: "Texto da tarefa é obrigatório" });
     }
 
+    const finalPriority = ["low", "medium", "high"].includes(priority) ? priority : "low";
+    const finalCategory = category ? category.trim() : null;  // ✅ texto livre
+
     const newTask = new Task({
       text: text.trim(),
       date: date || "",
-      priority: priority && ["low", "medium", "high"].includes(priority) ? priority : "low",
+      priority: finalPriority,
+      category: finalCategory,
+      dueDate: dueDate || null,
       completed: false
     });
 
@@ -80,13 +94,12 @@ app.post("/tasks", async (req, res) => {
   }
 });
 
-// PUT (Mongo) - com erro handling
+// PUT
 app.put("/tasks/:id", async (req, res) => {
   try {
     const { completed } = req.body;
     const { id } = req.params;
 
-    // Validar ID
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: "ID de tarefa inválido" });
     }
@@ -97,9 +110,7 @@ app.put("/tasks/:id", async (req, res) => {
       { new: true }
     );
 
-    if (!task) {
-      return res.status(404).json({ error: "Tarefa não encontrada" });
-    }
+    if (!task) return res.status(404).json({ error: "Tarefa não encontrada" });
 
     res.json(task);
   } catch (error) {
@@ -108,21 +119,17 @@ app.put("/tasks/:id", async (req, res) => {
   }
 });
 
-// DELETE (Mongo) - com erro handling
+// DELETE por id
 app.delete("/tasks/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Validar ID
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: "ID de tarefa inválido" });
     }
 
     const result = await Task.findByIdAndDelete(id);
-
-    if (!result) {
-      return res.status(404).json({ error: "Tarefa não encontrada" });
-    }
+    if (!result) return res.status(404).json({ error: "Tarefa não encontrada" });
 
     res.sendStatus(204);
   } catch (error) {
@@ -131,7 +138,7 @@ app.delete("/tasks/:id", async (req, res) => {
   }
 });
 
-// DELETE ALL - com confirmação
+// DELETE ALL
 app.delete("/tasks", async (req, res) => {
   try {
     const result = await Task.deleteMany();
@@ -142,12 +149,11 @@ app.delete("/tasks", async (req, res) => {
   }
 });
 
-
 // Middleware de erro global
 app.use((err, req, res, next) => {
   console.error("Erro não tratado:", err);
-  res.status(err.status || 500).json({ 
-    error: err.message || "Erro interno do servidor" 
+  res.status(err.status || 500).json({
+    error: err.message || "Erro interno do servidor"
   });
 });
 
