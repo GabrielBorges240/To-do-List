@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-// CORS
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
@@ -13,7 +12,6 @@ app.use(cors({
 
 app.use(express.json({ limit: "10mb" }));
 
-// 🔗 CONEXÃO MONGODB
 mongoose.connect("mongodb+srv://By37LUKA22mst9aQ:dV1TDYf0dIWuqhXP@cluster0.wyhvpst.mongodb.net/todolist", {
   maxPoolSize: 10,
   minPoolSize: 5,
@@ -27,13 +25,13 @@ mongoose.connection.on("disconnected", () => {
   console.warn("⚠️ MongoDB desconectado. Tentando reconectar...");
 });
 
-// 📦 MODEL — agora com category e dueDate
+// 📦 MODEL — com category e dueDate
 const taskSchema = new mongoose.Schema({
   text:      { type: String, required: true, trim: true },
   date:      { type: String, default: "" },
   priority:  { type: String, default: "low", enum: ["low", "medium", "high"] },
-  category:  { type: String, default: null },   // 🆕
-  dueDate:   { type: String, default: null },   // 🆕
+  category:  { type: String, default: null },
+  dueDate:   { type: String, default: null },
   completed: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });
@@ -45,7 +43,7 @@ app.get("/", (req, res) => {
   res.send("API está funcionando 🚀");
 });
 
-// GET - ordenado: Alta → Média → Baixa, mais recente primeiro
+// GET - ordenado
 app.get("/tasks", async (req, res) => {
   try {
     const priorityOrder = { high: 3, medium: 2, low: 1 };
@@ -65,7 +63,7 @@ app.get("/tasks", async (req, res) => {
   }
 });
 
-// POST - com category e dueDate
+// POST
 app.post("/tasks", async (req, res) => {
   try {
     const { text, date, priority, category, dueDate } = req.body;
@@ -75,7 +73,7 @@ app.post("/tasks", async (req, res) => {
     }
 
     const finalPriority = ["low", "medium", "high"].includes(priority) ? priority : "low";
-    const finalCategory = category ? category.trim() : null;  // ✅ texto livre
+    const finalCategory = category ? category.trim() : null;
 
     const newTask = new Task({
       text: text.trim(),
@@ -94,21 +92,21 @@ app.post("/tasks", async (req, res) => {
   }
 });
 
-// PUT
+// PUT — agora aceita category também
 app.put("/tasks/:id", async (req, res) => {
   try {
-    const { completed } = req.body;
+    const { completed, category } = req.body;
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: "ID de tarefa inválido" });
     }
 
-    const task = await Task.findByIdAndUpdate(
-      id,
-      { completed: Boolean(completed) },
-      { new: true }
-    );
+    const updateData = {};
+    if (completed !== undefined) updateData.completed = Boolean(completed);
+    if (category !== undefined) updateData.category = category.trim();
+
+    const task = await Task.findByIdAndUpdate(id, updateData, { new: true });
 
     if (!task) return res.status(404).json({ error: "Tarefa não encontrada" });
 
@@ -149,15 +147,11 @@ app.delete("/tasks", async (req, res) => {
   }
 });
 
-// Middleware de erro global
 app.use((err, req, res, next) => {
   console.error("Erro não tratado:", err);
-  res.status(err.status || 500).json({
-    error: err.message || "Erro interno do servidor"
-  });
+  res.status(err.status || 500).json({ error: err.message || "Erro interno do servidor" });
 });
 
-// Rota 404
 app.use((req, res) => {
   res.status(404).json({ error: "Rota não encontrada" });
 });
@@ -168,11 +162,8 @@ const server = app.listen(PORT, () => {
   console.log(`✅ Servidor rodando na porta ${PORT}`);
 });
 
-// Graceful shutdown
 process.on("SIGTERM", () => {
-  console.log("SIGTERM recebido. Encerrando servidor...");
   server.close(() => {
-    console.log("Servidor encerrado");
     mongoose.connection.close();
     process.exit(0);
   });
