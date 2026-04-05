@@ -923,6 +923,90 @@ li input[type="checkbox"] {
 .delete-btn:hover {
   transform: scale(1.05) translateY(-50%);
 }
+/* ========== FILTROS ========== */
+.filter-btn {
+  flex: 1;
+  min-width: 90px;
+  padding: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.05);
+  color: #000;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.filter-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.filter-btn.active {
+  background: linear-gradient(90deg, var(--btn1), var(--btn2));
+  color: #000000;
+  border-color: var(--btn1);
+  box-shadow: 0 0 12px var(--btn1);
+}
+
+.category-btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.05);
+  color: #000;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  text-transform: uppercase;
+}
+
+.category-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.category-btn.active,
+.category-btn[data-category="trabalho"].active,
+.category-btn[data-category="estudo"].active,
+.category-btn[data-category="casa"].active,
+.category-btn[data-category="outros"].active {
+  background: var(--btn1);
+  color: #000000  ;
+  border-color: var(--btn1);
+  box-shadow: 0 0 12px var(--btn1);
+}
+
+/* ========== CATEGORIAS ========== */
+.category-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: bold;
+   background: linear-gradient(90deg, var(--btn1), var(--btn2));
+   
+  color: #000000;
+  margin-top: 4px;
+  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+}
+
+body.light .category-tag {
+   background: linear-gradient(90deg, var(--btn1), var(--btn2));
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  color: #000000;
+}
 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -931,20 +1015,19 @@ li input[type="checkbox"] {
   <div class="page-wrapper">
 
   <header>
-  <h1 class="titulo-todo">To Do List</h1>
+    <h1 class="titulo-todo">To Do List</h1>
 
-  <div id="customConfirm">
-  <div class="box">
-    <h2>Are you sure?</h2>
-    <div class="actions">
-      <button id="confirmYes">Yes</button>
-      <button id="confirmNo">Cancel </button>
+    <div id="customConfirm">
+      <div class="box">
+        <h2>Are you sure?</h2>
+        <div class="actions">
+          <button id="confirmYes">Yes</button>
+          <button id="confirmNo">Cancel</button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
- 
 
-  <div id="themeToggle" title="Change theme"></div>
+    <div id="themeToggle" title="Change theme"></div>
   </header>
 
   <div class="todo-container">
@@ -953,82 +1036,86 @@ li input[type="checkbox"] {
     <div class="progress-bar-container">
       <div class="progress-bar" id="progressBar"></div>
     </div>
+
+   <div class="input-area">
+  <input type="text" id="taskInput" placeholder="Enter a task...">
+  <input type="text" id="categoryInput" placeholder="Category: e.g., Work, Home, Study..."   >
+  <input type="text" id="dueDateInput" placeholder="Date expiration:"  >
     
+
+  <!-- Card de Seleção de Prioridade -->
+  <div class="priority-card">
+    <p class="priority-title">Select Priority:</p>
+    <div class="priority-buttons">
+      <button class="priority-btn priority-btn-low" data-priority="low" title="Low Priority">
+        <span class="priority-icon">▼</span> Low
+      </button>
+      <button class="priority-btn priority-btn-medium" data-priority="medium" title="Medium Priority">
+        <span class="priority-icon">●</span> Medium
+      </button>
+      <button class="priority-btn priority-btn-high" data-priority="high" title="High Priority">
+        <span class="priority-icon">▲</span> High
+      </button>
+    </div>
+  </div>
+
+  <!-- Card de Filtros -->
+  <div class="priority-card">
+    <p class="priority-title">Filters:</p>
+    <div class="priority-buttons">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="pending">Pending</button>
+      <button class="filter-btn" data-filter="completed">Completed</button>
+    </div>
+  </div>
+
+  <!-- Data de Expiração -->
   
 
-    <div class="input-area">
-      <input type="text" id="taskInput" placeholder="Enter a task...">
-      
-      <!-- Card de Seleção de Prioridade -->
-      <div class="priority-card">
-        <p class="priority-title">Select Priority:</p>
-        <div class="priority-buttons">
-          <button class="priority-btn priority-btn-low" data-priority="low" title="Low Priority">
-            <span class="priority-icon">▼</span> Low
-          </button>
-          <button class="priority-btn priority-btn-medium" data-priority="medium" title="Medium Priority">
-            <span class="priority-icon">●</span> Medium
-          </button>
-          <button class="priority-btn priority-btn-high" data-priority="high" title="High Priority">
-            <span class="priority-icon">▲</span> High
-          </button>
-        </div>
-      </div>
-      
-      <button id="addBtn">Add Task</button>
-      <input type="text" id="searchInput" placeholder="Search task by name or date...">
-    </div>
+  <button id="addBtn">Add Task</button>
+</div>
 
-    
     <ul id="taskList"></ul>
-    <div class="botao-container">
-  <button id="clearAll" class="botao">Clear All</button>
-  <button id="exportCSV" class="botao">Export PDF</button>
-    </div>
 
+    <div class="botao-container">
+      <button id="clearAll" class="botao">Clear All</button>
+      <button id="exportCSV" class="botao">Export PDF</button>
+    </div>
 
   </div>
 
-   <footer>
+  <footer>
     <p class="assinatura">
       © <span class="nome">Gabriel Borges</span>. All rights reserved. • 2025
     </p>
   </footer>
 
- </div> 
-
+</div>
  
  
 <script>
 const API_URL = "https://to-do-list-hr46.onrender.com/tasks";
 const addBtn = document.getElementById("addBtn");
 const taskInput = document.getElementById("taskInput");
-         // <---
 const taskList = document.getElementById("taskList");
 const clearAllBtn = document.getElementById("clearAll");
 const taskCounter = document.getElementById("taskCounter");
 const progressBar = document.getElementById("progressBar");
-const prioritySelect = document.getElementById("prioritySelect");
 const themeToggle = document.getElementById("themeToggle");
 const exportCSVBtn = document.getElementById("exportCSV");
+const categoryInput = document.getElementById("categoryInput");
 
-// Novos elementos para o card de prioridade
+// ---- Prioridade ----
 let currentPriority = "low";
 const priorityBtns = document.querySelectorAll(".priority-btn");
 
-// Evento para botões de prioridade
 priorityBtns.forEach(btn => {
   btn.addEventListener("click", () => {
-    // Remove ativo de todos os botões
     priorityBtns.forEach(b => b.classList.remove("active"));
-    // Adiciona ativo ao clicado
     btn.classList.add("active");
-    // Armazena a prioridade selecionada
     currentPriority = btn.dataset.priority;
   });
 });
-
-// Inicializar com a prioridade "low" ativa
 document.querySelector('[data-priority="low"]').classList.add("active");
 
 // ---- Tema claro/escuro ----
@@ -1038,25 +1125,58 @@ themeToggle.addEventListener("click", () => {
 });
 if (localStorage.getItem("theme") === "light") document.body.classList.add("light");
 
- 
+// ---- Filtros ----
+let currentFilter = "all";
+const filterBtns = document.querySelectorAll(".filter-btn");
 
- 
+filterBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    filterBtns.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentFilter = btn.dataset.filter;
+    applyFilters();
+  });
+});
 
-// ---- Carregar tarefas ----
+function applyFilters() {
+  const tasks = document.querySelectorAll("#taskList li");
+  tasks.forEach(task => {
+    let show = true;
+    if (currentFilter === "pending") show = !task.classList.contains("completed");
+    else if (currentFilter === "completed") show = task.classList.contains("completed");
+    task.style.display = show ? "flex" : "none";
+  });
+}
+
+// ---- Mapa de peso de prioridade ----
+const priorityWeight = { high: 3, medium: 2, low: 1 };
+
+// ---- Converte "DD/MM/YYYY HH:MM:SS" → Date ----
+function parseDate(dateStr) {
+  if (!dateStr) return new Date(0);
+  const [datePart, timePart] = dateStr.trim().split(" ");
+  const [day, month, year] = datePart.split("/");
+  return new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
+}
+
+// ---- Carregar e ordenar tarefas ----
 async function loadTasks() {
   const res = await fetch(API_URL);
   const tasks = await res.json();
+
+  tasks.sort((a, b) => {
+    const pa = priorityWeight[a.priority?.toLowerCase()] ?? 0;
+    const pb = priorityWeight[b.priority?.toLowerCase()] ?? 0;
+    if (pb !== pa) return pb - pa;
+    return parseDate(b.date) - parseDate(a.date);
+  });
+
   taskList.innerHTML = "";
-  tasks.forEach(task => {
-  createTaskElement(
-    task.text,
-    task.completed,
-    task.date,
-    task.priority,
-    task._id // 👈 CORRETO
+  tasks.forEach(task =>
+    createTaskElement(task.text, task.completed, task.date, task.priority, task._id, task.category, task.dueDate)
   );
-});
   updateCounter();
+  applyFilters();
 }
 
 // ---- Atualiza contador e barra de progresso ----
@@ -1067,13 +1187,15 @@ function updateCounter() {
   const percent = total > 0 ? (completed / total) * 100 : 0;
   progressBar.style.width = percent + "%";
 }
- 
+
 // ---- Cria elemento visual da tarefa ----
-function createTaskElement(text, completed = false, date = "", priority = "Low", id = null) {
+function createTaskElement(text, completed = false, date = "", priority = "low", id = null, category = null, dueDate = null) {
   const li = document.createElement("li");
   li.dataset.priority = priority;
+  if (category) li.dataset.category = category;
 
   const taskLeft = document.createElement("div");
+
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.checked = completed;
@@ -1082,14 +1204,60 @@ function createTaskElement(text, completed = false, date = "", priority = "Low",
   span.textContent = text;
   span.classList.add("task-text");
 
+  // Data de criação
   const dateSpan = document.createElement("small");
   if (date) dateSpan.textContent = " " + date;
 
-  const priorityTag = document.createElement("div");
-priorityTag.textContent = `Priority: ${traduzirPrioridade[priority.toLowerCase()]}`;
-priorityTag.classList.add("priority", priority);
+  // Categoria — editável, abaixo da data
+  const categoryTag = document.createElement("div");
+  categoryTag.classList.add("category-tag");
+  categoryTag.innerHTML = `<strong>Categoria:</strong> <span class="category-text" contenteditable="true">${category || "Sem categoria"}</span>`;
 
-  taskLeft.append(checkbox, span, dateSpan, priorityTag);
+  // Salvar categoria ao sair do campo
+  const categorySpan = categoryTag.querySelector(".category-text");
+  categorySpan.addEventListener("blur", async () => {
+    const newCategory = categorySpan.textContent.trim();
+    if (id) {
+      try {
+        await fetch(`${API_URL}/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ category: newCategory })
+        });
+      } catch (error) {
+        console.error("Erro ao atualizar categoria:", error);
+        mostrarAlertaCentral("Erro ao salvar categoria.");
+      }
+    }
+  });
+
+  // Prioridade
+  const priorityTag = document.createElement("div");
+  priorityTag.textContent = `Priority: ${traduzirPrioridade[priority.toLowerCase()] || priority.toUpperCase()}`;
+  priorityTag.classList.add("priority", priority.toLowerCase());
+
+  // Tag de data de expiração
+  let dueTag = null;
+  if (dueDate) {
+    dueTag = document.createElement("div");
+    dueTag.classList.add("due-date-tag");
+    const dueDateObj = new Date(dueDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    dueDateObj.setHours(0, 0, 0, 0);
+
+    if (dueDateObj < today && !completed) {
+      dueTag.classList.add("overdue");
+      dueTag.textContent = `🚨 Vencida`;
+    } else {
+      dueTag.textContent = `📅 ${dueDateObj.toLocaleDateString("pt-BR")}`;
+    }
+  }
+
+  // ✅ Ordem: texto → data → categoria → prioridade → vencimento
+  taskLeft.append(checkbox, span, dateSpan, categoryTag, priorityTag);
+  if (dueTag) taskLeft.append(dueTag);
+
   li.append(taskLeft);
 
   if (completed) li.classList.add("completed");
@@ -1104,9 +1272,21 @@ priorityTag.classList.add("priority", priority);
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ completed: checkbox.checked })
         });
+        if (dueTag && dueDate) {
+          const dueDateObj = new Date(dueDate);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          dueDateObj.setHours(0, 0, 0, 0);
+          if (dueDateObj < today && !checkbox.checked) {
+            dueTag.classList.add("overdue");
+            dueTag.textContent = `🚨 Vencida`;
+          } else {
+            dueTag.classList.remove("overdue");
+            dueTag.textContent = `📅 ${dueDateObj.toLocaleDateString("pt-BR")}`;
+          }
+        }
       } catch (error) {
         console.error("Error updating task:", error);
-        // Reverter a mudança se falhar
         li.classList.toggle("completed", !checkbox.checked);
         checkbox.checked = !checkbox.checked;
         mostrarAlertaCentral("Error updating task. Please try again.");
@@ -1115,9 +1295,10 @@ priorityTag.classList.add("priority", priority);
     }
     salvarDoDOM();
     updateCounter();
+    applyFilters();
   });
 
-  // 🗑️ Deletar tarefa
+  // Deletar tarefa
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "X";
   deleteBtn.classList.add("delete-btn");
@@ -1134,115 +1315,44 @@ priorityTag.classList.add("priority", priority);
   updateCounter();
 }
 
-// ---- Salvar todas as tarefas que estão na tela ----
-// Função depreciada - mantida para compatibilidade futura
-function salvarDoDOM() {
-  // Agora salvamos diretamente no servidor
-}
+// ---- Depreciada ----
+function salvarDoDOM() {}
 
 // ---- Adicionar nova tarefa ----
 async function addTask() {
   const text = taskInput.value.trim();
   const priority = currentPriority;
+  const category = categoryInput.value.trim() || null;
+  const dueDate = document.getElementById("dueDateInput").value;
+
   if (!text) return;
 
   const d = new Date();
   const pad = n => String(n).padStart(2, '0');
   const date = `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 
-  //   UPDATE OTIMISTA: Renderizar imediatamente
-  let newTaskId = null;
-  const li = document.createElement("li");
-  li.dataset.priority = priority;
-  li.setAttribute("data-pending", "true");
-
-  const taskLeft = document.createElement("div");
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.checked = false;
-
-  const span = document.createElement("span");
-  span.textContent = text;
-  span.classList.add("task-text");
-
-  const dateSpan = document.createElement("small");
-  if (date) dateSpan.textContent = " " + date;
-
-  const priorityTag = document.createElement("div");
-  priorityTag.textContent = `Priority: ${traduzirPrioridade[priority.toLowerCase()]}`;
-  priorityTag.classList.add("priority", priority);
-
-  taskLeft.append(checkbox, span, dateSpan, priorityTag);
-  li.append(taskLeft);
-
-  const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "X";
-  deleteBtn.classList.add("delete-btn");
-
-  let isDeleted = false;
-  deleteBtn.addEventListener("click", async () => {
-    isDeleted = true;
-    li.remove();
-    updateCounter();
-    if (newTaskId) {
-      await fetch(`${API_URL}/${newTaskId}`, { method: "DELETE" });
-    }
-  });
-
-  checkbox.addEventListener("change", async () => {
-    li.classList.toggle("completed", checkbox.checked);
-    if (newTaskId) {
-      try {
-        await fetch(`${API_URL}/${newTaskId}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ completed: checkbox.checked })
-        });
-      } catch (error) {
-        console.error("Error updating task:", error);
-        li.classList.toggle("completed", !checkbox.checked);
-        checkbox.checked = !checkbox.checked;
-        mostrarAlertaCentral("Error updating task. Please try again.");
-        return;
-      }
-    }
-    updateCounter();
-  });
-
-  li.append(deleteBtn);
-  taskList.append(li);
-  updateCounter();
-
   taskInput.value = "";
+  categoryInput.value = "";
+  document.getElementById("dueDateInput").value = "";
 
-  // 🌐 SALVAR NO SERVIDOR EM BACKGROUND
   try {
     const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, date, priority })
+      body: JSON.stringify({ text, date, priority, category, dueDate })
     });
 
     if (res.ok) {
-      const newTask = await res.json();
-      newTaskId = newTask._id;
-      li.removeAttribute("data-pending");
+      await loadTasks();
     } else {
-      if (!isDeleted) {
-        li.style.opacity = "0.5";
-        li.style.pointerEvents = "none";
-        mostrarAlertaCentral("Failed to save task. Please try again.");
-      }
+      mostrarAlertaCentral("Failed to save task. Please try again.");
     }
   } catch (error) {
-    console.error("Error adding task:", error);
-    if (!isDeleted) {
-      li.style.opacity = "0.5";
-      li.style.pointerEvents = "none";
-      mostrarAlertaCentral("Connection error. Task may not be saved.");
-    }
+    console.error("Connection error:", error);
+    mostrarAlertaCentral("Connection error. Task may not be saved.");
   }
 }
+
 // ---- Eventos ----
 addBtn.addEventListener("click", addTask);
 taskInput.addEventListener("keypress", e => { if (e.key === "Enter") addTask(); });
@@ -1256,8 +1366,6 @@ clearAllBtn.addEventListener("click", () => {
   customConfirm.style.display = "flex";
 });
 
-// ...existing code...
-
 confirmYes.addEventListener("click", async () => {
   await fetch(API_URL, { method: "DELETE" });
   taskList.innerHTML = "";
@@ -1265,14 +1373,15 @@ confirmYes.addEventListener("click", async () => {
   customConfirm.style.display = "none";
 });
 
-// ...existing code...
 confirmNo.addEventListener("click", () => {
   customConfirm.style.display = "none";
 });
 
 // ---- Exportar PDF ----
-exportCSVBtn.addEventListener("click", () => {
-  const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+exportCSVBtn.addEventListener("click", async () => {
+  const res = await fetch(API_URL);
+  const savedTasks = await res.json();
+
   if (savedTasks.length === 0) {
     mostrarAlertaCentral("No tasks to export!");
     return;
@@ -1292,14 +1401,13 @@ exportCSVBtn.addEventListener("click", () => {
     doc.setFont("helvetica", "bold");
     doc.text(`${i + 1}. ${t.text}`, 14, y);
     doc.setFont("helvetica", "normal");
-    doc.text(`Status: ${t.completed ? " Completed" : " Pending"}`, 14, y + 6);
-    if (t.date) doc.text(`Date: ${t.date}`, 14, y + 12);
-    doc.text(`Priority: ${traduzirPrioridade[t.priority.toLowerCase()]}`, 14, y + 18);
-    y += 28;
-    if (y > 270) {
-      doc.addPage();
-      y = 20;
-    }
+    doc.text(`Status: ${t.completed ? "Completed" : "Pending"}`, 14, y + 6);
+    if (t.date)     doc.text(`Created: ${t.date}`, 14, y + 12);
+    if (t.dueDate)  doc.text(`Due: ${t.dueDate}`, 14, y + 18);
+    if (t.category) doc.text(`Category: ${t.category}`, 14, y + 24);
+    doc.text(`Priority: ${traduzirPrioridade[t.priority?.toLowerCase()] || t.priority}`, 14, y + 30);
+    y += 38;
+    if (y > 270) { doc.addPage(); y = 20; }
   });
 
   doc.save("tasks.pdf");
@@ -1311,50 +1419,14 @@ function mostrarAlertaCentral(mensagem) {
   alerta.id = "alertaCentral";
   alerta.textContent = mensagem;
   document.body.appendChild(alerta);
-
-  setTimeout(() => {
-    alerta.remove();
-  }, 2500);
+  setTimeout(() => alerta.remove(), 2500);
 }
 
-const searchInput = document.getElementById("searchInput");
-
-// 🔍 Filtrar tarefas por nome ou data (com debounce)
-let searchTimeout;
-searchInput.addEventListener("input", () => {
-  clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(() => {
-    const termo = searchInput.value.toLowerCase().trim();
-    const tarefas = document.querySelectorAll("#taskList li");
-
-    tarefas.forEach(li => {
-      const texto = li.querySelector(".task-text")?.textContent.toLowerCase() || "";
-      const data = li.querySelector("small")?.textContent.toLowerCase() || "";
-
-      // Se o termo está incluso no texto OU na data → mostra; senão, esconde
-      if (texto.includes(termo) || data.includes(termo)) {
-        li.style.display = "";
-      } else {
-        li.style.display = "none";
-      }
-    });
-  }, 200); // Espera 200ms depois que usuário para de digitar
-});
-
-const traduzirPrioridade = { 
-  low: "LOW",
-  medium: "MEDIUM",
-  high: "HIGH"
-};
-
-
+// ---- Traduções ----
+const traduzirPrioridade = { low: "LOW", medium: "MEDIUM", high: "HIGH" };
 
 // ---- Carregar tarefas ao iniciar ----
-window.addEventListener("load", loadTasks);
- 
- 
-
-
+window.addEventListener("load", loadTasks);sss
 </script>
 </body>
 </html>
