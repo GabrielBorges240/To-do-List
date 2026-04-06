@@ -5,54 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To-Do List com Prioridades</title>
 <style>
-  :root {
-    --grad1: #f72585; --grad2: #b5179e; --grad3: #7209b7;
-    --grad4: #560BAD; --grad5: #480ca8; --grad6: #3f37c9;
-    --grad7: #4895ef; --grad8: #4cc9f0;
-    --card-bg: rgba(58, 12, 163, 0.8);
-    --text: #000000;
-    --border: #b5179e;
-    --input-bg: rgba(63, 55, 201, 0.7);
-    --btn1: var(--grad1);
-    --btn2: var(--grad2);
-    --progress1: var(--grad7);
-    --progress2: var(--grad8);
-  }
+:root {
+  --grad1: #f72585; --grad2: #b5179e; --grad3: #7209b7;
+  --grad4: #560BAD; --grad5: #480ca8; --grad6: #3f37c9;
+  --grad7: #4895ef; --grad8: #4cc9f0;
+  --card-bg: rgba(58, 12, 163, 0.8);
+  --text: #000000;
+  --border: #b5179e;
+  --input-bg: rgba(63, 55, 201, 0.7);
+  --btn1: var(--grad1);
+  --btn2: var(--grad2);
+  --progress1: var(--grad7);
+  --progress2: var(--grad8);
+}
 
-  body.light {
-    --grad1: #007f5f; --grad2: #2b9348; --grad3: #55a630;
-    --grad4: #80b918; --grad5: #aacc00; --grad6: #bfd200;
-    --grad7: #d4d700; --grad8: #a1a172;
-    --card-bg: rgba(75, 120, 40, 0.8);
-    --text: #000000;
-    --border: #5a6e1b;
-    --input-bg: rgba(186, 216, 90, 0.6);
-    --btn1: var(--grad3);
-    --btn2: var(--grad5);
-    --progress1: var(--grad7);
-    --progress2: var(--grad8);
-  }
+body.light {
+  --grad1: #007f5f; --grad2: #2b9348; --grad3: #55a630;
+  --grad4: #80b918; --grad5: #aacc00; --grad6: #bfd200;
+  --grad7: #d4d700; --grad8: #a1a172;
+  --card-bg: rgba(75, 120, 40, 0.8);
+  --text: #000000;
+  --border: #5a6e1b;
+  --input-bg: rgba(186, 216, 90, 0.6);
+  --btn1: var(--grad3);
+  --btn2: var(--grad5);
+  --progress1: var(--grad7);
+  --progress2: var(--grad8);
+}
 
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    color: var(--text);
-    background: linear-gradient(45deg, var(--grad1), var(--grad2), var(--grad3), var(--grad4), var(--grad5), var(--grad6), var(--grad7), var(--grad8));
-    background-size: 400% 400%;
-    animation: gradient 12s ease infinite;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    transition: all 0.6s ease;
-  }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: var(--text);
+  background: linear-gradient(45deg, var(--grad1), var(--grad2), var(--grad3), var(--grad4), var(--grad5), var(--grad6), var(--grad7), var(--grad8));
+  background-size: 400% 400%;
+  animation: gradient 12s ease infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  transition: all 0.6s ease;
+}
 
-  @keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
 header {
   display: flex;
@@ -60,13 +60,8 @@ header {
   justify-content: center;
   gap: 15px;
   margin-top: 20px;
-  margin-bottom: 0!important;/* tira o espaço embaixo do título */
+  margin-bottom: 0 !important;
 }
-
-.todo-container {
-  margin-top: 0!important; /* encosta o card no título */
-}
-
 
 #themeToggle {
   width: 30px;
@@ -78,332 +73,284 @@ header {
   transition: 0.3s;
 }
 
-/* quando o usuário passar o mouse */
-#themeToggle:hover {
-  transform: scale(1.1);
+#themeToggle:hover { transform: scale(1.1); }
+
+h1 { color: var(--text); text-shadow: 2px 2px 6px rgba(0,0,0,0.3); }
+
+.todo-container {
+  position: relative;
+  flex: 0 0 auto;
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  width: 90%;
+  max-width: 440px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  margin: 0 auto 8px auto !important;
+  border: 2px solid var(--border);
+  transition: all 0.4s ease;
+  color: black;
+  box-sizing: border-box;
 }
- 
- 
 
+.todo-container::before {
+  content: "";
+  position: absolute;
+  top: -3px; left: -3px; right: -3px; bottom: -3px;
+  border-radius: 14px;
+  background: linear-gradient(45deg, var(--grad1), var(--grad3), var(--grad5), var(--grad7), var(--grad8), var(--grad1));
+  background-size: 300% 300%;
+  animation: brilhoCard 6s linear infinite;
+  z-index: -1;
+  filter: blur(8px);
+}
 
-  h1 {
-    color: var(--text);
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-  }
+@keyframes brilhoCard {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-  .todo-container {
-    background: var(--card-bg);
-    border-radius: 12px;
-    padding: 20px;
-    width: 90%;
-    max-width: 440px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    margin-top: 20px;
-    border: 2px solid var(--border);
-    transition: all 0.4s ease;
-    color: black;
-  }
+.counter {
+  text-align: center;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  margin-bottom: 10px;
+}
 
-  .counter {
-    text-align: center;
-    font-weight: bold;
-    background: rgba(0, 0, 0, 0.15);
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    margin-bottom: 10px;
-  }
+.progress-bar-container {
+  width: 100%;
+  height: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 10px;
+   
+}
 
-  .progress-bar-container {
-    width: 100%;
-    height: 15px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    margin-bottom: 15px;
-  }
-
-  .progress-bar {
+.progress-bar {
   height: 100%;
   background: linear-gradient(90deg, var(--progress1), var(--progress2));
   width: 0%;
   border-radius: 10px;
   transition: width 0.8s ease;
-  box-shadow:
-    0 0 8px var(--progress1),
-    0 0 16px var(--progress2),
-    0 0 24px var(--progress2),
-    0 0 40px var(--progress1);
   animation: neonProgress 3s ease-in-out infinite alternate;
 }
 
-/* ✨ animação suave do brilho da barra */
 @keyframes neonProgress {
-  0% {
-    box-shadow:
-      0 0 6px var(--progress1),
-      0 0 14px var(--progress2),
-      0 0 24px var(--progress2);
-  }
-  100% {
-    box-shadow:
-      0 0 12px var(--progress2),
-      0 0 24px var(--progress1),
-      0 0 36px var(--progress2);
-  }
+  0%   { box-shadow: 0 0 6px var(--progress1), 0 0 14px var(--progress2), 0 0 24px var(--progress2); }
+  100% { box-shadow: 0 0 12px var(--progress2), 0 0 24px var(--progress1), 0 0 36px var(--progress2); }
 }
 
+.input-area {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
 
-  .input-area {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 15px;
-  }
-
-  input[type="text"], input[type="date"], select {
-    padding: 10px;
-    border-radius: 8px;
-    border: 2px solid var(--grad3);
-    outline: none;
-    font-size: 16px;
-    background-color: var(--input-bg);
-    color: black;
-    
-  }
-
-  /* ========== CARD DE PRIORIDADE ========== */
-  .priority-card {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid var(--border);
-    border-radius: 10px;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-  }
-
-  .priority-card:hover {
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  }
-
-  .priority-title {
-    margin: 0;
-    font-size: 14px;
-    font-weight: bold;
-    color: var(--text);
-    text-align: center;
-  }
-
-  .priority-buttons {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .priority-btn {
-    flex: 1;
-    min-width: 90px;
-    padding: 10px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.05);
-    color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    text-transform: uppercase;
-  }
-
-  .priority-btn:hover {
-    transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.6);
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Cores dos botões da prioridade */
-  .priority-btn-low {
-    color: #000;
-  }
-
-  .priority-btn-low.active {
-    background: #00c3ff;
-    border-color: #00c3ff;
-    box-shadow: 0 0 12px rgba(0, 195, 255, 0.6);
-  }
-
-  .priority-btn-medium {
-    color: #000;
-  }
-
-  .priority-btn-medium.active {
-    background: #ffc80d;
-    border-color: #ffc80d;
-    box-shadow: 0 0 12px rgba(255, 200, 13, 0.6);
-  }
-
-  .priority-btn-high {
-    color: #000;
-  }
-
-  .priority-btn-high.active {
-    background: #d00000;
-    border-color: #d00000;
-    box-shadow: 0 0 12px rgba(208, 0, 0, 0.6);
-  }
-
-  .priority-icon {
-    font-size: 12px;
-    display: inline-block;
-  }
-
-  button {
-    padding: 13px;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(90deg, var(--btn1), var(--btn2));
-    color: #000000;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-  }
- #addBtn {
-  font-size: 18px;              /* 🔹 texto maior */
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  text-transform: none;         /* 🔹 mantém "Adicionar" normal */
-  padding: 10px 10px;            /* 🔹 menos espaço interno → botão não cresce */
+input[type="text"], input[type="date"], select {
+  padding: 10px;
   border-radius: 8px;
-  min-width: 140px;
+  border: 2px solid var(--grad3);
+  outline: none;
+  font-size: 16px;
+  background-color: var(--input-bg);
+  color: black;
+}
+
+.priority-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.priority-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.priority-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text);
+  text-align: center;
+}
+
+.priority-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.priority-btn {
+  flex: 1;
+  min-width: 90px;
+  padding: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: bold !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-transform: uppercase;
+}
+
+.priority-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.priority-btn-low.active   { background: #00c3ff; border-color: #00c3ff; box-shadow: 0 0 12px rgba(0,195,255,0.6); }
+.priority-btn-medium.active { background: #ffc80d; border-color: #ffc80d; box-shadow: 0 0 12px rgba(255,200,13,0.6); }
+.priority-btn-high.active  { background: #d00000; border-color: #d00000; box-shadow: 0 0 12px rgba(208,0,0,0.6); }
+
+.priority-icon { font-size: 12px; display: inline-block; }
+
+button {
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--btn1), var(--btn2));
+  color: #000000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* ✅ addBtn com letra maior e tamanho proporcional */
+#addBtn {
+  font-size: 17px;
+ font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 8px;
+  width: 100%;
   background: linear-gradient(90deg, var(--btn1), var(--btn2));
   color: #000;
   transition: all 0.3s ease-in-out;
-  box-shadow: 0 0 4px rgba(255,255,255,0.15);
   cursor: pointer;
+  margin-bottom: 0;
+
 }
 
-li {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* ✅ centraliza tudo */
-  text-align: center;
-  flex-direction: column; /* ✅ coloca em coluna */
-} 
-
-
-
-
-  .botao-container {
+.botao-container {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 10px;
   flex-wrap: wrap;
+  margin-top: 10px;
 }
 
 .botao {
   flex: 1;
-  max-width: 220px; /* mantém uma largura bonita e responsiva */
-}
-
-  .botao {
-    padding: 12px 24px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(90deg, var(--btn1), var(--btn2));
-    color: #000000;
-    cursor: pointer;
-    min-width: 150px;
-    text-align: center;
-    transition: 0.3s;
-  }
-
-  button:hover, .botao:hover {
-    opacity: 0.9;
-    transform: scale(1.03);
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  li {
-    background: rgba(255, 255, 255, 0.15);
-    padding: 10px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-     
-    border: 1px solid var(--border);
-    transition: all 0.4s;
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadeIn 0.4s forwards;
-  }
-
-  @keyframes fadeIn {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* --- Aqui está o novo estilo atualizado --- */
-  .completed {
-    background: rgba(0, 0, 0, 0.25);
-    border-color: var(--grad5);
-    transition: background 0.3s, border 0.3s;
-  }
-
-  body.light .completed {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: var(--grad3);
-  }
-
-  .completed span {
-    text-decoration: line-through;
-    color: var(--text);
-    opacity: 0.6;
-  }
-  /* --- fim do bloco --- */
-
-  .priority.low { background-color: #00c3ff; color: rgb(0, 0, 0); }
-  .priority.medium { background-color: #ffc80d; color: rgb(0, 0, 0); }
-  .priority.high { background-color: #d00000; color: rgb(0, 0, 0); }
-
-  .priority {
-    font-size: 13px;
-    font-weight: bold;
-    margin-top: 5px;
-    padding: 3px 8px;
-    border-radius: 6px;
-    text-transform: uppercase;
+  max-width: 220px;
+  padding: 12px 24px;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--btn1), var(--btn2));
+  color: #000000;
+  cursor: pointer;
+  min-width: 150px;
+  text-align: center;
+  transition: 0.3s;
     
-  }
-#taskList li div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
-  footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 14px;
-    color: var(--text);
-  }
 
-  /* Estilo do checkbox padrão */
+button:hover, .botao:hover {
+  transform: scale(1.02);
+  opacity: 1;
+  animation: neonPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes neonPulse {
+  0%   { box-shadow: 0 0 6px var(--btn1), 0 0 12px var(--btn2), 0 0 20px var(--btn2); }
+  100% { box-shadow: 0 0 10px var(--btn2), 0 0 22px var(--btn2), 0 0 35px var(--btn2); }
+}
+
+ul { list-style: none; padding: 0; margin: 0; }
+
+#taskList { margin: 0; padding: 0; margin-bottom: 0; }
+
+li {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  transition: all 0.4s;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeIn 0.4s forwards;
+  position: relative;
+  justify-content: center;
+}
+
+@keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+
+.completed {
+  background: rgba(0, 0, 0, 0.25);
+  border-color: var(--grad5);
+  transition: background 0.3s, border 0.3s;
+}
+
+body.light .completed {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: var(--grad3);
+}
+
+.completed span { text-decoration: line-through; color: var(--text); opacity: 0.6; }
+
+.priority.low    { background-color: #00c3ff; color: #000; }
+.priority.medium { background-color: #ffc80d; color: #000; }
+.priority.high   { background-color: #d00000; color: #000; }
+
+.priority {
+  font-size: 13px;
+  font-weight: bold   !important;
+  margin-top: 5px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  width: fit-content;
+  min-width: 90px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+#taskList li div { display: flex; flex-direction: column; align-items: center; }
+
+footer {
+  text-align: center;
+  padding: 5px 20px 20px;
+  font-size: 14px;
+  color: var(--text);
+  margin-top: 0 !important;
+}
+
 input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
@@ -417,148 +364,54 @@ input[type="checkbox"] {
   background-color: transparent;
 }
 
-
-/* Cor do checkbox marcado (modo escuro) */
 input[type="checkbox"]:checked {
   background: linear-gradient(90deg, var(--btn1), var(--btn2));
   border-color: var(--btn2);
 }
 
-/* Cor do checkbox no tema claro (verde) */
-body.light input[type="checkbox"] {
-  border-color: var(--grad2);
-}
-
+body.light input[type="checkbox"] { border-color: var(--grad2); }
 body.light input[type="checkbox"]:checked {
   background: linear-gradient(90deg, var(--btn1), var(--btn2));
   border-color: var(--btn2);
 }
 
-/* Ícone de check customizado */
 input[type="checkbox"]:checked::after {
   content: "✔";
   color: black;
   position: absolute;
-  top: 0;
-  left: 4px;
+  top: 0; left: 4px;
   font-size: 14px;
   line-height: 20px;
 }
-.priority {
-  display: under;
-  font-size: 13px;
-  font-weight: bold;
-  margin-top: 5px;
-  padding: 3px 8px;
-  border-radius: 6px;
-  text-transform: uppercase;
-  width: fit-content;
-  min-width: 90px; 
-  text-align: center;
-  white-space: nowrap;
-  
-}
+
 .titulo-todo {
-  color: #000000; /* branco puro */
+  color: #000000;
   font-weight: bold;
   text-align: center;
   font-size: 32px;
-  text-shadow: 0 0 8px #fff, 0 0 12px #ffffff, 0 0 16px #ffffff;
   animation: brilho 1.5s ease-in-out infinite alternate;
 }
 
-/* Animação suave de brilho branco */
 @keyframes brilho {
-  0% {
-    text-shadow: 0 0 6px #fff, 0 0 10px #ffffff, 0 0 14px #ffffff;
-  }
-  100% {
-    text-shadow: 0 0 10px #fff, 0 0 20px #ffffff, 0 0 30px #ffffff;
-  }
+  0%   { text-shadow: 0 0 6px #fff, 0 0 10px #fff, 0 0 14px #fff; }
+  100% { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff; }
 }
 
-  /* --- EFEITO DE BRILHO AO REDOR DO CARD --- */
-.todo-container {
-  position: relative;
-  background: var(--card-bg);
-  border-radius: 12px;
-  padding: 20px;
-  width: 90%;
-  max-width: 440px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  margin-top: 20px;
-  border: 2px solid var(--border);
-  transition: all 0.4s ease;
-  color: black;
-}
+.page-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; }
 
-.todo-container::before {
-  content: "";
-  position: absolute;
-  top: -3px;
-  left: -3px;
-  right: -3px;
-  bottom: -3px;
-  border-radius: 14px;
-  background: linear-gradient(45deg,
-    var(--grad1),
-    var(--grad3),
-    var(--grad5),
-    var(--grad7),
-    var(--grad8),
-    var(--grad1)
-  );
-  background-size: 300% 300%;
-  animation: brilhoCard 6s linear infinite;
-  z-index: -1;
-  filter: blur(8px);
-}
-
-@keyframes brilhoCard {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* 🔹 Garante que o card não diminua junto com a assinatura */
-.page-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-/* 🔹 Mantém o card sempre com tamanho fixo e centralizado */
-.todo-container {
-  flex: 0 0 auto;
-  width: 90%;
-  max-width: 440px;
-  margin: 20px auto;
-  box-sizing: border-box;
-}
-
-/* 🔹 Faz a assinatura não afetar o tamanho do card */
 .assinatura {
   flex: none;
   width: 100%;
   text-align: center;
-  margin-top: 15px;
-  font-size: 15px;
+  margin-top: 5px !important;
+  font-size: 14px;
   color: black;
 }
- 
- 
 
-
-
-
-/* --- MODAL PERSONALIZADO DE CONFIRMAÇÃO --- */
 #customConfirm {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: rgba(0,0,0,0.6);
   display: none;
   align-items: center;
@@ -571,53 +424,38 @@ input[type="checkbox"]:checked::after {
   position: relative;
   background: var(--card-bg);
   color: var(--text);
-  padding: 15px 20px;          /* 🔹 reduz o tamanho interno */
-  border-radius: 10px;         /* 🔹 bordas mais suaves */
+  padding: 15px 20px;
+  border-radius: 10px;
   width: 85%;
-  max-width: 260px;            /* 🔹 bem menor */
+  max-width: 260px;
   text-align: center;
   animation: fadeIn 0.3s ease;
   border: 1.5px solid var(--border);
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 12px rgba(0,0,0,0.4);
   overflow: hidden;
 }
 
-/* título menor */
-#customConfirm h2 {
-  font-size: 1rem;             /* 🔹 menor texto */
-  margin-bottom: 15px;
-  line-height: 1.3;
-}
-
-/* botões menores e mais próximos */
-#customConfirm .actions {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
+#customConfirm h2 { font-size: 1rem; margin-bottom: 15px; line-height: 1.3; color: var(--text); }
+#customConfirm .actions { display: flex; justify-content: center; gap: 10px; }
 
 #customConfirm button {
   padding: 6px 12px;
   font-size: 0.85rem;
   border-radius: 6px;
   font-weight: bold;
+  background: linear-gradient(90deg, var(--btn1), var(--btn2));
+  cursor: pointer;
+  transition: 0.3s;
 }
 
+#customConfirm button:hover { transform: scale(1.05); opacity: 0.9; }
 
-/* Borda brilhante animada */
 #customConfirm .box::before {
   content: "";
   position: absolute;
   inset: -3px;
   border-radius: 16px;
-  background: linear-gradient(45deg,
-    var(--grad1),
-    var(--grad3),
-    var(--grad5),
-    var(--grad7),
-    var(--grad8),
-    var(--grad1)
-  );
+  background: linear-gradient(45deg, var(--grad1), var(--grad3), var(--grad5), var(--grad7), var(--grad8), var(--grad1));
   background-size: 300% 300%;
   animation: glowBorder 6s linear infinite;
   filter: blur(8px);
@@ -625,44 +463,14 @@ input[type="checkbox"]:checked::after {
 }
 
 @keyframes glowBorder {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-#customConfirm h2 {
-  margin-bottom: 20px;
-  color: var(--text);
-}
-
-#customConfirm .actions {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-#customConfirm button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  background: linear-gradient(90deg, var(--btn1), var(--btn2));
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-#customConfirm button:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
- 
- 
-
-/* ===== ALERTA CENTRAL COM MESMO TEMA DO BACKGROUND ===== */
 #alertaCentral {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   background: linear-gradient(90deg, var(--grad1), var(--grad2), var(--grad3));
   color: black;
@@ -673,22 +481,19 @@ input[type="checkbox"]:checked::after {
   z-index: 9999;
   opacity: 0;
   animation: fadeInOut 2.5s ease forwards;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 20px rgba(255,255,255,0.4);
   border: 2px solid var(--border);
   max-width: 80%;
   line-height: 1.4;
 }
 
-/* Animação de entrada/saída suave */
 @keyframes fadeInOut {
-  0% { opacity: 0; transform: translate(-50%, -60%); }
-  15% { opacity: 1; transform: translate(-50%, -50%); }
-  85% { opacity: 1; transform: translate(-50%, -50%); }
+  0%   { opacity: 0; transform: translate(-50%, -60%); }
+  15%  { opacity: 1; transform: translate(-50%, -50%); }
+  85%  { opacity: 1; transform: translate(-50%, -50%); }
   100% { opacity: 0; transform: translate(-50%, -40%); }
 }
 
- 
-/* ===== UNIFICAÇÃO DE TAMANHO DOS CAMPOS ===== */
 input[type="date"] {
   width: 100%;
   box-sizing: border-box;
@@ -701,239 +506,61 @@ input[type="date"] {
   padding: 10px;
 }
 
-/* Corrige diferenças no iOS e Android */
-@supports (-webkit-touch-callout: none) {
-  input[type="date"] {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    text-align: left;
-    padding-right: 10px;
-  }
-}
- 
-/* Ícone de calendário customizado */
-.input-area {
-  position: relative;
-}
-
-.input-area input[type="date"] {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24"><path d="M7 11h5v5H7z"/><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v16c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H5V8h14v13z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 20px;
-  padding-right: 35px;
-  cursor: pointer;
-}
-/* Remove o ícone padrão do input date (Safari, Chrome, Edge, etc.) */
 input[type="date"]::-webkit-calendar-picker-indicator {
-  opacity: 0;
-  display: none;
+  opacity: 0; display: none;
   -webkit-appearance: none;
-  appearance: none;
   pointer-events: none;
 }
 
-/* Remove o ícone padrão em navegadores baseados em Firefox */
-input[type="date"]::-moz-focus-inner,
-input[type="date"]::-moz-calendar-picker-indicator {
-  display: none;
-}
-
-/*   Efeito neon suave no hover (botões principais) */
-button:hover, .botao:hover {
-  transform: scale(1.02); /*   bem mais suave */
-  opacity: 1;
-  box-shadow:
-    0 0 6px var(--btn1),
-    0 0 12px var(--btn2),
-    0 0 18px var(--btn2),
-    0 0 25px var(--btn2);
-  transition: all 0.3s ease-in-out;
-  animation: neonPulse 1.2s ease-in-out infinite alternate;
-}
-
-/*   Efeito pulsante suave (animação do brilho) */
-@keyframes neonPulse {
-  0% {
-    box-shadow:
-      0 0 6px var(--btn1),
-      0 0 12px var(--btn2),
-      0 0 20px var(--btn2);
-  }
-  100% {
-    box-shadow:
-      0 0 10px var(--btn2),
-      0 0 22px var(--btn2),
-      0 0 35px var(--btn2);
-  }
-}
-
-/* Aplica a animação no hover */
-button:hover, .botao:hover {
-  animation: neonPulse 1.2s ease-in-out infinite alternate;
-}
-
- /* 🔧 Ajuste fino da distância entre o card e a assinatura */
-.todo-container {
-  margin-bottom: 8px !important; /* 🔹 diminui espaço inferior do card */
-}
-
-footer {
-  margin-top: 0 !important;      /* 🔹 remove espaço extra acima do rodapé */
-  padding-top: 5px;              /* 🔹 pequeno respiro visual */
-}
-
-.assinatura {
-  margin-top: 5px !important;    /* 🔹 aproxima mais o texto da assinatura */
-  font-size: 14px;
-  color: black;
-}
-
-/* 📱 Corrige botões no celular */
-@media (max-width: 600px) {
-  .botao-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .botao {
-    flex: 1 1 45%;
-    min-width: 140px;
-    max-width: 180px;
-    padding: 12px;
-    font-size: 0.95rem;
-    text-align: center;
-  }
-
-  .todo-container {
-    margin-bottom: 6px !important;
-  }
-
-  .assinatura {
-    margin-top: 6px !important;
-  }
-}
-/* 🔽 Remove a seta padrão do campo select (prioridade) */
 select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: none !important; /* garante que não apareça seta padrão */
+  appearance: none; -webkit-appearance: none; -moz-appearance: none;
+  background-image: none !important;
   padding-right: 10px;
 }
 
-/* 🔧 Corrige o alinhamento interno do texto */
-select::-ms-expand {
-  display: none; /* remove seta no Internet Explorer */
-}
- 
-  
+select::-ms-expand { display: none; }
 
-/* 🔧 Corrige cor do texto e do placeholder no campo de tarefa */
-#taskInput {
-  color: rgb(0, 0, 0) !important; /* cor do texto digitado */
-}
+#taskInput { color: rgb(0,0,0) !important; }
+#taskInput::placeholder { color: rgba(0,0,0,0.8); }
+#searchInput::placeholder { color: rgb(0,0,0) !important; }
+#dueDateInput { color: black; }
+#dueDateInput::placeholder { color: rgba(0,0,0,0.8); }
 
-#taskInput::placeholder {
-  color: rgba(0, 0, 0, 0.8); /* cor mais clara do placeholder */
-}
-
- 
-#taskDate::placeholder  {
-  color: rgb(0, 0, 0) !important; /* cor do texto digitado */
-} 
-#searchInput::placeholder  {
-  color: rgb(0, 0, 0) !important; /* cor do texto digitado */
-}
-li {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.3s ease;
-}
-
-li.show {
-  opacity: 1;
-  transform: translateY(0);
-}
- 
-li {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* mantém o conteúdo no meio */
-  position: relative; /* necessário pro botão ficar fixo na esquerda */
-}
-
-/* botão X na esquerda */
-.delete-btn {
-  position: absolute;
-  left: 10px;
-}
-
-/* conteúdo centralizado */
-.task-wrapper {
-  text-align: center;
-}
-li {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* X na esquerda centralizado */
 .delete-btn {
   position: absolute;
   left: 10px;
   top: 50%;
   transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* checkbox na direita centralizado */
+.delete-btn:hover { transform: scale(1.05) translateY(-50%); }
+
 li input[type="checkbox"] {
   position: absolute;
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-}
-/* tamanho padrão pros dois */
-.delete-btn,
-li input[type="checkbox"] {
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* botão X */
-.delete-btn {
-  font-size: 14px;
-  padding: 0;
-}
-
-/* checkbox */
-li input[type="checkbox"] {
   width: 28px;
   height: 28px;
 }
-.delete-btn:hover {
-  transform: scale(1.05) translateY(-50%);
-}
-/* ========== FILTROS ========== */
+
 .filter-btn {
   flex: 1;
   min-width: 90px;
   padding: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255,255,255,0.3);
   border-radius: 8px;
   cursor: pointer;
   font-size: 13px;
   font-weight: bold;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255,255,255,0.05);
   color: #000;
   transition: all 0.3s ease;
   text-transform: uppercase;
@@ -941,72 +568,41 @@ li input[type="checkbox"] {
 
 .filter-btn:hover {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .filter-btn.active {
   background: linear-gradient(90deg, var(--btn1), var(--btn2));
-  color: #000000;
-  border-color: var(--btn1);
-  box-shadow: 0 0 12px var(--btn1);
-}
-
-.category-btn {
-  flex: 1;
-  min-width: 80px;
-  padding: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: bold;
-  background: rgba(255, 255, 255, 0.05);
   color: #000;
-  transition: all 0.3s ease;
-  font-family: inherit;
-  text-transform: uppercase;
-}
-
-.category-btn:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.category-btn.active,
-.category-btn[data-category="trabalho"].active,
-.category-btn[data-category="estudo"].active,
-.category-btn[data-category="casa"].active,
-.category-btn[data-category="outros"].active {
-  background: var(--btn1);
-  color: #000000  ;
   border-color: var(--btn1);
   box-shadow: 0 0 12px var(--btn1);
 }
 
-/* ========== CATEGORIAS ========== */
-.category-tag {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 8px;
-  font-size: 11px;
-  font-weight: bold;
-   background: linear-gradient(90deg, var(--btn1), var(--btn2));
-   
-  color: #000000;
-  margin-top: 4px;
-  margin-bottom: 2px;
-  letter-spacing: 0.5px;
+.due-date-tag {
+  font-size: 12px;
+  background: linear-gradient(90deg, var(--btn1), var(--btn2));
+  margin-top: 2px;
+  
 }
 
-body.light .category-tag {
-   background: linear-gradient(90deg, var(--btn1), var(--btn2));
-  border: 1px solid rgba(0, 0, 0, 0.3);
+.due-date-tag.overdue {
   color: #000000;
+  font-weight: bold;
+  animation: pulse 1s infinite;
 }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@media (max-width: 600px) {
+  .botao-container { flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .botao { flex: 1 1 45%; min-width: 140px; max-width: 180px; padding: 12px; font-size: 0.95rem; }
+}
+
 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1016,7 +612,6 @@ body.light .category-tag {
 
   <header>
     <h1 class="titulo-todo">To Do List</h1>
-
     <div id="customConfirm">
       <div class="box">
         <h2>Are you sure?</h2>
@@ -1026,7 +621,6 @@ body.light .category-tag {
         </div>
       </div>
     </div>
-
     <div id="themeToggle" title="Change theme"></div>
   </header>
 
@@ -1037,43 +631,39 @@ body.light .category-tag {
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
-   <div class="input-area">
-  <input type="text" id="taskInput" placeholder="Enter a task...">
-  <input type="text" id="categoryInput" placeholder="Category: e.g., Work, Home, Study..."   >
-  <input type="text" id="dueDateInput" placeholder="Date expiration:"  >
-    
+    <div class="input-area">
+      <input type="text" id="taskInput" placeholder="Enter a task...">
+      <input type="text" id="dueDateInput" placeholder="Date expiration:  " maxlength="10">
 
-  <!-- Card de Seleção de Prioridade -->
-  <div class="priority-card">
-    <p class="priority-title">Select Priority:</p>
-    <div class="priority-buttons">
-      <button class="priority-btn priority-btn-low" data-priority="low" title="Low Priority">
-        <span class="priority-icon">▼</span> Low
-      </button>
-      <button class="priority-btn priority-btn-medium" data-priority="medium" title="Medium Priority">
-        <span class="priority-icon">●</span> Medium
-      </button>
-      <button class="priority-btn priority-btn-high" data-priority="high" title="High Priority">
-        <span class="priority-icon">▲</span> High
-      </button>
+      <!-- Card de Seleção de Prioridade -->
+      <div class="priority-card">
+        <p class="priority-title">Select Priority:</p>
+        <div class="priority-buttons">
+          <button class="priority-btn priority-btn-low" data-priority="low" title="Low Priority">
+            <span class="priority-icon">▼</span> Low
+          </button>
+          <button class="priority-btn priority-btn-medium" data-priority="medium" title="Medium Priority">
+            <span class="priority-icon">●</span> Medium
+          </button>
+          <button class="priority-btn priority-btn-high" data-priority="high" title="High Priority">
+            <span class="priority-icon">▲</span> High
+          </button>
+        </div>
+      </div>
+
+      <!-- Card de Filtros -->
+      <div class="priority-card">
+        <p class="priority-title">Filters:</p>
+        <div class="priority-buttons">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="pending">Pending</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+      </div>
+
+      <input type="text" id="searchInput" placeholder="Search task by name or date...">
+      <button id="addBtn">Add Task</button>
     </div>
-  </div>
-
-  <!-- Card de Filtros -->
-  <div class="priority-card">
-    <p class="priority-title">Filters:</p>
-    <div class="priority-buttons">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="pending">Pending</button>
-      <button class="filter-btn" data-filter="completed">Completed</button>
-    </div>
-  </div>
-
-  <!-- Data de Expiração -->
-  
-
-  <button id="addBtn">Add Task</button>
-</div>
 
     <ul id="taskList"></ul>
 
@@ -1081,7 +671,6 @@ body.light .category-tag {
       <button id="clearAll" class="botao">Clear All</button>
       <button id="exportCSV" class="botao">Export PDF</button>
     </div>
-
   </div>
 
   <footer>
@@ -1091,8 +680,7 @@ body.light .category-tag {
   </footer>
 
 </div>
- 
- 
+
 <script>
 const API_URL = "https://to-do-list-hr46.onrender.com/tasks";
 const addBtn = document.getElementById("addBtn");
@@ -1103,7 +691,16 @@ const taskCounter = document.getElementById("taskCounter");
 const progressBar = document.getElementById("progressBar");
 const themeToggle = document.getElementById("themeToggle");
 const exportCSVBtn = document.getElementById("exportCSV");
-const categoryInput = document.getElementById("categoryInput");
+const dueDateInput = document.getElementById("dueDateInput");
+
+// ---- Máscara DD/MM/AAAA ----
+dueDateInput.addEventListener("input", (e) => {
+  let value = e.target.value.replace(/\D/g, "");
+  if (value.length > 2) value = value.slice(0, 2) + "/" + value.slice(2);
+  if (value.length > 5) value = value.slice(0, 5) + "/" + value.slice(5);
+  if (value.length > 10) value = value.slice(0, 10);
+  e.target.value = value;
+});
 
 // ---- Prioridade ----
 let currentPriority = "low";
@@ -1148,10 +745,8 @@ function applyFilters() {
   });
 }
 
-// ---- Mapa de peso de prioridade ----
 const priorityWeight = { high: 3, medium: 2, low: 1 };
 
-// ---- Converte "DD/MM/YYYY HH:MM:SS" → Date ----
 function parseDate(dateStr) {
   if (!dateStr) return new Date(0);
   const [datePart, timePart] = dateStr.trim().split(" ");
@@ -1159,7 +754,27 @@ function parseDate(dateStr) {
   return new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
 }
 
-// ---- Carregar e ordenar tarefas ----
+function dueDateToISO(str) {
+  if (!str || str.length !== 10) return null;
+  const [day, month, year] = str.split("/");
+  return `${year}-${month}-${day}`;
+}
+
+function dueDateToBR(str) {
+  if (!str) return null;
+  if (str.includes("/")) return str;
+  const [year, month, day] = str.split("T")[0].split("-");
+  return `${day}/${month}/${year}`;
+}
+
+function isOverdue(dueDateStr) {
+  if (!dueDateStr) return false;
+  const br = dueDateToBR(dueDateStr);
+  const [day, month, year] = br.split("/");
+  const due = new Date(`${year}-${month}-${day}T23:59:59`);
+  return due < new Date();
+}
+
 async function loadTasks() {
   const res = await fetch(API_URL);
   const tasks = await res.json();
@@ -1173,13 +788,12 @@ async function loadTasks() {
 
   taskList.innerHTML = "";
   tasks.forEach(task =>
-    createTaskElement(task.text, task.completed, task.date, task.priority, task._id, task.category, task.dueDate)
+    createTaskElement(task.text, task.completed, task.date, task.priority, task._id, task.dueDate)
   );
   updateCounter();
   applyFilters();
 }
 
-// ---- Atualiza contador e barra de progresso ----
 function updateCounter() {
   const total = document.querySelectorAll("#taskList li").length;
   const completed = document.querySelectorAll("#taskList li.completed").length;
@@ -1188,11 +802,9 @@ function updateCounter() {
   progressBar.style.width = percent + "%";
 }
 
-// ---- Cria elemento visual da tarefa ----
-function createTaskElement(text, completed = false, date = "", priority = "low", id = null, category = null, dueDate = null) {
+function createTaskElement(text, completed = false, date = "", priority = "low", id = null, dueDate = null) {
   const li = document.createElement("li");
   li.dataset.priority = priority;
-  if (category) li.dataset.category = category;
 
   const taskLeft = document.createElement("div");
 
@@ -1204,65 +816,33 @@ function createTaskElement(text, completed = false, date = "", priority = "low",
   span.textContent = text;
   span.classList.add("task-text");
 
-  // Data de criação
   const dateSpan = document.createElement("small");
   if (date) dateSpan.textContent = " " + date;
 
-  // Categoria — editável, abaixo da data
-  const categoryTag = document.createElement("div");
-  categoryTag.classList.add("category-tag");
-  categoryTag.innerHTML = `<strong>Categoria:</strong> <span class="category-text" contenteditable="true">${category || "Sem categoria"}</span>`;
-
-  // Salvar categoria ao sair do campo
-  const categorySpan = categoryTag.querySelector(".category-text");
-  categorySpan.addEventListener("blur", async () => {
-    const newCategory = categorySpan.textContent.trim();
-    if (id) {
-      try {
-        await fetch(`${API_URL}/${id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ category: newCategory })
-        });
-      } catch (error) {
-        console.error("Erro ao atualizar categoria:", error);
-        mostrarAlertaCentral("Erro ao salvar categoria.");
-      }
-    }
-  });
-
-  // Prioridade
   const priorityTag = document.createElement("div");
   priorityTag.textContent = `Priority: ${traduzirPrioridade[priority.toLowerCase()] || priority.toUpperCase()}`;
   priorityTag.classList.add("priority", priority.toLowerCase());
 
-  // Tag de data de expiração
   let dueTag = null;
   if (dueDate) {
     dueTag = document.createElement("div");
     dueTag.classList.add("due-date-tag");
-    const dueDateObj = new Date(dueDate);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    dueDateObj.setHours(0, 0, 0, 0);
-
-    if (dueDateObj < today && !completed) {
+    const dueBR = dueDateToBR(dueDate);
+    if (isOverdue(dueDate) && !completed) {
       dueTag.classList.add("overdue");
-      dueTag.textContent = `🚨 Vencida`;
+      dueTag.textContent = `  Vencida: ${dueBR}`;
     } else {
-      dueTag.textContent = `📅 ${dueDateObj.toLocaleDateString("pt-BR")}`;
+      dueTag.textContent = `  ${dueBR}`;
     }
   }
 
-  // ✅ Ordem: texto → data → categoria → prioridade → vencimento
-  taskLeft.append(checkbox, span, dateSpan, categoryTag, priorityTag);
+  taskLeft.append(checkbox, span, dateSpan);
   if (dueTag) taskLeft.append(dueTag);
+  taskLeft.append(priorityTag);
 
   li.append(taskLeft);
-
   if (completed) li.classList.add("completed");
 
-  // Marcar como concluída
   checkbox.addEventListener("change", async () => {
     li.classList.toggle("completed", checkbox.checked);
     if (id) {
@@ -1273,16 +853,13 @@ function createTaskElement(text, completed = false, date = "", priority = "low",
           body: JSON.stringify({ completed: checkbox.checked })
         });
         if (dueTag && dueDate) {
-          const dueDateObj = new Date(dueDate);
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-          dueDateObj.setHours(0, 0, 0, 0);
-          if (dueDateObj < today && !checkbox.checked) {
+          const dueBR = dueDateToBR(dueDate);
+          if (isOverdue(dueDate) && !checkbox.checked) {
             dueTag.classList.add("overdue");
-            dueTag.textContent = `🚨 Vencida`;
+            dueTag.textContent = `  Vencida: ${dueBR}`;
           } else {
             dueTag.classList.remove("overdue");
-            dueTag.textContent = `📅 ${dueDateObj.toLocaleDateString("pt-BR")}`;
+            dueTag.textContent = `  ${dueBR}`;
           }
         }
       } catch (error) {
@@ -1298,7 +875,6 @@ function createTaskElement(text, completed = false, date = "", priority = "low",
     applyFilters();
   });
 
-  // Deletar tarefa
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "X";
   deleteBtn.classList.add("delete-btn");
@@ -1315,15 +891,12 @@ function createTaskElement(text, completed = false, date = "", priority = "low",
   updateCounter();
 }
 
-// ---- Depreciada ----
 function salvarDoDOM() {}
 
-// ---- Adicionar nova tarefa ----
 async function addTask() {
   const text = taskInput.value.trim();
   const priority = currentPriority;
-  const category = categoryInput.value.trim() || null;
-  const dueDate = document.getElementById("dueDateInput").value;
+  const dueDate = dueDateToISO(dueDateInput.value.trim());
 
   if (!text) return;
 
@@ -1332,14 +905,13 @@ async function addTask() {
   const date = `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 
   taskInput.value = "";
-  categoryInput.value = "";
-  document.getElementById("dueDateInput").value = "";
+  dueDateInput.value = "";
 
   try {
     const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, date, priority, category, dueDate })
+      body: JSON.stringify({ text, date, priority, dueDate })
     });
 
     if (res.ok) {
@@ -1353,18 +925,14 @@ async function addTask() {
   }
 }
 
-// ---- Eventos ----
 addBtn.addEventListener("click", addTask);
 taskInput.addEventListener("keypress", e => { if (e.key === "Enter") addTask(); });
 
-// ---- Limpar todas as tarefas ----
 const customConfirm = document.getElementById("customConfirm");
 const confirmYes = document.getElementById("confirmYes");
 const confirmNo = document.getElementById("confirmNo");
 
-clearAllBtn.addEventListener("click", () => {
-  customConfirm.style.display = "flex";
-});
+clearAllBtn.addEventListener("click", () => { customConfirm.style.display = "flex"; });
 
 confirmYes.addEventListener("click", async () => {
   await fetch(API_URL, { method: "DELETE" });
@@ -1373,11 +941,8 @@ confirmYes.addEventListener("click", async () => {
   customConfirm.style.display = "none";
 });
 
-confirmNo.addEventListener("click", () => {
-  customConfirm.style.display = "none";
-});
+confirmNo.addEventListener("click", () => { customConfirm.style.display = "none"; });
 
-// ---- Exportar PDF ----
 exportCSVBtn.addEventListener("click", async () => {
   const res = await fetch(API_URL);
   const savedTasks = await res.json();
@@ -1402,18 +967,16 @@ exportCSVBtn.addEventListener("click", async () => {
     doc.text(`${i + 1}. ${t.text}`, 14, y);
     doc.setFont("helvetica", "normal");
     doc.text(`Status: ${t.completed ? "Completed" : "Pending"}`, 14, y + 6);
-    if (t.date)     doc.text(`Created: ${t.date}`, 14, y + 12);
-    if (t.dueDate)  doc.text(`Due: ${t.dueDate}`, 14, y + 18);
-    if (t.category) doc.text(`Category: ${t.category}`, 14, y + 24);
-    doc.text(`Priority: ${traduzirPrioridade[t.priority?.toLowerCase()] || t.priority}`, 14, y + 30);
-    y += 38;
+    if (t.date)    doc.text(`Created: ${t.date}`, 14, y + 12);
+    if (t.dueDate) doc.text(`Due: ${dueDateToBR(t.dueDate)}`, 14, y + 18);
+    doc.text(`Priority: ${traduzirPrioridade[t.priority?.toLowerCase()] || t.priority}`, 14, y + 24);
+    y += 32;
     if (y > 270) { doc.addPage(); y = 20; }
   });
 
   doc.save("tasks.pdf");
 });
 
-// ---- Alerta central ----
 function mostrarAlertaCentral(mensagem) {
   const alerta = document.createElement("div");
   alerta.id = "alertaCentral";
@@ -1422,11 +985,24 @@ function mostrarAlertaCentral(mensagem) {
   setTimeout(() => alerta.remove(), 2500);
 }
 
-// ---- Traduções ----
 const traduzirPrioridade = { low: "LOW", medium: "MEDIUM", high: "HIGH" };
 
-// ---- Carregar tarefas ao iniciar ----
-window.addEventListener("load", loadTasks);sss
+const searchInput = document.getElementById("searchInput");
+let searchTimeout;
+searchInput.addEventListener("input", () => {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    const termo = searchInput.value.toLowerCase().trim();
+    const tarefas = document.querySelectorAll("#taskList li");
+    tarefas.forEach(li => {
+      const texto = li.querySelector(".task-text")?.textContent.toLowerCase() || "";
+      const data = li.querySelector("small")?.textContent.toLowerCase() || "";
+      li.style.display = (texto.includes(termo) || data.includes(termo)) ? "" : "none";
+    });
+  }, 200);
+});
+
+window.addEventListener("load", loadTasks);
 </script>
 </body>
 </html>
