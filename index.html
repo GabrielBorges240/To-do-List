@@ -1,9 +1,9 @@
 <!DOCTYPE html>  
-<html lang="en-US">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To-Do List com Prioridades</title>
+  <title>Lista de Tarefas com Prioridades</title>
 <style>
 :root {
   --grad1: #f72585; --grad2: #b5179e; --grad3: #7209b7;
@@ -129,7 +129,6 @@ h1 { color: var(--text); text-shadow: 2px 2px 6px rgba(0,0,0,0.3); }
   border: 1px solid var(--border);
   overflow: hidden;
   margin-bottom: 10px;
-   
 }
 
 .progress-bar {
@@ -222,9 +221,9 @@ input[type="text"], input[type="date"], select {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.priority-btn-low.active   { background: #00c3ff; border-color: #00c3ff; box-shadow: 0 0 12px rgba(0,195,255,0.6); }
+.priority-btn-low.active    { background: #00c3ff; border-color: #00c3ff; box-shadow: 0 0 12px rgba(0,195,255,0.6); }
 .priority-btn-medium.active { background: #ffc80d; border-color: #ffc80d; box-shadow: 0 0 12px rgba(255,200,13,0.6); }
-.priority-btn-high.active  { background: #d00000; border-color: #d00000; box-shadow: 0 0 12px rgba(208,0,0,0.6); }
+.priority-btn-high.active   { background: #d00000; border-color: #d00000; box-shadow: 0 0 12px rgba(208,0,0,0.6); }
 
 .priority-icon { font-size: 12px; display: inline-block; }
 
@@ -239,10 +238,9 @@ button {
   transition: 0.3s;
 }
 
-/* ✅ addBtn com letra maior e tamanho proporcional */
 #addBtn {
   font-size: 17px;
- font-weight: bold;
+  font-weight: normal;
   padding: 12px 24px;
   border-radius: 8px;
   width: 100%;
@@ -251,7 +249,6 @@ button {
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   margin-bottom: 0;
-
 }
 
 .botao-container {
@@ -275,7 +272,7 @@ button {
   min-width: 150px;
   text-align: center;
   transition: 0.3s;
-    
+  font-weight: normal;
 }
 
 button:hover, .botao:hover {
@@ -290,7 +287,6 @@ button:hover, .botao:hover {
 }
 
 ul { list-style: none; padding: 0; margin: 0; }
-
 #taskList { margin: 0; padding: 0; margin-bottom: 0; }
 
 li {
@@ -330,7 +326,7 @@ body.light .completed {
 
 .priority {
   font-size: 13px;
-  font-weight: bold   !important;
+  font-weight: bold !important;
   margin-top: 5px;
   padding: 3px 8px;
   border-radius: 6px;
@@ -584,7 +580,6 @@ li input[type="checkbox"] {
   font-size: 12px;
   background: linear-gradient(90deg, var(--btn1), var(--btn2));
   margin-top: 2px;
-  
 }
 
 .due-date-tag.overdue {
@@ -602,8 +597,6 @@ li input[type="checkbox"] {
   .botao-container { flex-wrap: wrap; justify-content: center; gap: 10px; }
   .botao { flex: 1 1 45%; min-width: 140px; max-width: 180px; padding: 12px; font-size: 0.95rem; }
 }
-
-
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
@@ -611,71 +604,71 @@ li input[type="checkbox"] {
   <div class="page-wrapper">
 
   <header>
-    <h1 class="titulo-todo">To Do List</h1>
+    <h1 class="titulo-todo">Lista de Tarefas</h1>
     <div id="customConfirm">
       <div class="box">
-        <h2>Are you sure?</h2>
+        <h2>Tem certeza?</h2>
         <div class="actions">
-          <button id="confirmYes">Yes</button>
-          <button id="confirmNo">Cancel</button>
+          <button id="confirmYes">Sim</button>
+          <button id="confirmNo">Cancelar</button>
         </div>
       </div>
     </div>
-    <div id="themeToggle" title="Change theme"></div>
+    <div id="themeToggle" title="Alternar tema"></div>
   </header>
 
   <div class="todo-container">
-    <div class="counter" id="taskCounter">Tasks: 0 | Completed: 0</div>
+    <div class="counter" id="taskCounter">Tarefas: 0 | Concluídas: 0</div>
 
     <div class="progress-bar-container">
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
     <div class="input-area">
-      <input type="text" id="taskInput" placeholder="Enter a task...">
-      <input type="text" id="dueDateInput" placeholder="Date expiration:  " maxlength="10">
+      <input type="text" id="taskInput" placeholder="Digite uma tarefa...">
+      <input type="text" id="dueDateInput" placeholder="Data de vencimento:  " maxlength="10">
 
       <!-- Card de Seleção de Prioridade -->
       <div class="priority-card">
-        <p class="priority-title">Select Priority:</p>
+        <p class="priority-title">Selecionar Prioridade:</p>
         <div class="priority-buttons">
-          <button class="priority-btn priority-btn-low" data-priority="low" title="Low Priority">
-            <span class="priority-icon">▼</span> Low
+          <button class="priority-btn priority-btn-low" data-priority="low" title="Prioridade Baixa">
+            <span class="priority-icon">▼</span> Baixa
           </button>
-          <button class="priority-btn priority-btn-medium" data-priority="medium" title="Medium Priority">
-            <span class="priority-icon">●</span> Medium
+          <button class="priority-btn priority-btn-medium" data-priority="medium" title="Prioridade Média">
+            <span class="priority-icon">●</span> Média
           </button>
-          <button class="priority-btn priority-btn-high" data-priority="high" title="High Priority">
-            <span class="priority-icon">▲</span> High
+          <button class="priority-btn priority-btn-high" data-priority="high" title="Prioridade Alta">
+            <span class="priority-icon">▲</span> Alta
           </button>
         </div>
       </div>
 
       <!-- Card de Filtros -->
       <div class="priority-card">
-        <p class="priority-title">Filters:</p>
+        <p class="priority-title">Filtros:</p>
         <div class="priority-buttons">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="pending">Pending</button>
-          <button class="filter-btn" data-filter="completed">Completed</button>
+          <button class="filter-btn active" data-filter="all">Todas</button>
+          <button class="filter-btn" data-filter="pending">Pendentes</button>
+          <button class="filter-btn" data-filter="completed">Concluídas</button>
         </div>
       </div>
 
-      <input type="text" id="searchInput" placeholder="Search task by name or date...">
-      <button id="addBtn">Add Task</button>
+      <input type="text" id="searchInput" placeholder="Buscar tarefa por nome ou data...">
+      <button id="addBtn">Adicionar Tarefa</button>
     </div>
 
     <ul id="taskList"></ul>
 
     <div class="botao-container">
-      <button id="clearAll" class="botao">Clear All</button>
-      <button id="exportCSV" class="botao">Export PDF</button>
+      <button id="clearAll" class="botao">Limpar Tudo</button>
+      <button id="exportCSV" class="botao">Exportar PDF</button>
     </div>
   </div>
 
   <footer>
     <p class="assinatura">
-      © <span class="nome">Gabriel Borges</span>. All rights reserved. • 2025
+      © <span class="nome">Gabriel Borges</span>. Todos os direitos reservados. • 2025
     </p>
   </footer>
 
@@ -718,9 +711,9 @@ document.querySelector('[data-priority="low"]').classList.add("active");
 // ---- Tema claro/escuro ----
 themeToggle.addEventListener("click", () => {
   document.body.classList.toggle("light");
-  localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
+  localStorage.setItem("tema", document.body.classList.contains("light") ? "light" : "dark");
 });
-if (localStorage.getItem("theme") === "light") document.body.classList.add("light");
+if (localStorage.getItem("tema") === "light") document.body.classList.add("light");
 
 // ---- Filtros ----
 let currentFilter = "all";
@@ -731,21 +724,21 @@ filterBtns.forEach(btn => {
     filterBtns.forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
     currentFilter = btn.dataset.filter;
-    applyFilters();
+    aplicarFiltros();
   });
 });
 
-function applyFilters() {
-  const tasks = document.querySelectorAll("#taskList li");
-  tasks.forEach(task => {
-    let show = true;
-    if (currentFilter === "pending") show = !task.classList.contains("completed");
-    else if (currentFilter === "completed") show = task.classList.contains("completed");
-    task.style.display = show ? "flex" : "none";
+function aplicarFiltros() {
+  const tarefas = document.querySelectorAll("#taskList li");
+  tarefas.forEach(tarefa => {
+    let mostrar = true;
+    if (currentFilter === "pending")   mostrar = !tarefa.classList.contains("completed");
+    else if (currentFilter === "completed") mostrar = tarefa.classList.contains("completed");
+    tarefa.style.display = mostrar ? "flex" : "none";
   });
 }
 
-const priorityWeight = { high: 3, medium: 2, low: 1 };
+const pesosPrioridade = { high: 3, medium: 2, low: 1 };
 
 function parseDate(dateStr) {
   if (!dateStr) return new Date(0);
@@ -754,55 +747,55 @@ function parseDate(dateStr) {
   return new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
 }
 
-function dueDateToISO(str) {
+function dueDateParaISO(str) {
   if (!str || str.length !== 10) return null;
   const [day, month, year] = str.split("/");
   return `${year}-${month}-${day}`;
 }
 
-function dueDateToBR(str) {
+function dueDateParaBR(str) {
   if (!str) return null;
   if (str.includes("/")) return str;
   const [year, month, day] = str.split("T")[0].split("-");
   return `${day}/${month}/${year}`;
 }
 
-function isOverdue(dueDateStr) {
+function estaVencida(dueDateStr) {
   if (!dueDateStr) return false;
-  const br = dueDateToBR(dueDateStr);
+  const br = dueDateParaBR(dueDateStr);
   const [day, month, year] = br.split("/");
-  const due = new Date(`${year}-${month}-${day}T23:59:59`);
-  return due < new Date();
+  const vencimento = new Date(`${year}-${month}-${day}T23:59:59`);
+  return vencimento < new Date();
 }
 
-async function loadTasks() {
+async function carregarTarefas() {
   const res = await fetch(API_URL);
-  const tasks = await res.json();
+  const tarefas = await res.json();
 
-  tasks.sort((a, b) => {
-    const pa = priorityWeight[a.priority?.toLowerCase()] ?? 0;
-    const pb = priorityWeight[b.priority?.toLowerCase()] ?? 0;
+  tarefas.sort((a, b) => {
+    const pa = pesosPrioridade[a.priority?.toLowerCase()] ?? 0;
+    const pb = pesosPrioridade[b.priority?.toLowerCase()] ?? 0;
     if (pb !== pa) return pb - pa;
     return parseDate(b.date) - parseDate(a.date);
   });
 
   taskList.innerHTML = "";
-  tasks.forEach(task =>
-    createTaskElement(task.text, task.completed, task.date, task.priority, task._id, task.dueDate)
+  tarefas.forEach(t =>
+    criarElementoTarefa(t.text, t.completed, t.date, t.priority, t._id, t.dueDate)
   );
-  updateCounter();
-  applyFilters();
+  atualizarContador();
+  aplicarFiltros();
 }
 
-function updateCounter() {
+function atualizarContador() {
   const total = document.querySelectorAll("#taskList li").length;
-  const completed = document.querySelectorAll("#taskList li.completed").length;
-  taskCounter.textContent = `Tasks: ${total} | Completed: ${completed}`;
-  const percent = total > 0 ? (completed / total) * 100 : 0;
+  const concluidas = document.querySelectorAll("#taskList li.completed").length;
+  taskCounter.textContent = `Tarefas: ${total} | Concluídas: ${concluidas}`;
+  const percent = total > 0 ? (concluidas / total) * 100 : 0;
   progressBar.style.width = percent + "%";
 }
 
-function createTaskElement(text, completed = false, date = "", priority = "low", id = null, dueDate = null) {
+function criarElementoTarefa(text, completed = false, date = "", priority = "low", id = null, dueDate = null) {
   const li = document.createElement("li");
   li.dataset.priority = priority;
 
@@ -820,19 +813,19 @@ function createTaskElement(text, completed = false, date = "", priority = "low",
   if (date) dateSpan.textContent = " " + date;
 
   const priorityTag = document.createElement("div");
-  priorityTag.textContent = `Priority: ${traduzirPrioridade[priority.toLowerCase()] || priority.toUpperCase()}`;
+  priorityTag.textContent = `Prioridade: ${traduzirPrioridade[priority.toLowerCase()] || priority.toUpperCase()}`;
   priorityTag.classList.add("priority", priority.toLowerCase());
 
   let dueTag = null;
   if (dueDate) {
     dueTag = document.createElement("div");
     dueTag.classList.add("due-date-tag");
-    const dueBR = dueDateToBR(dueDate);
-    if (isOverdue(dueDate) && !completed) {
+    const dueBR = dueDateParaBR(dueDate);
+    if (estaVencida(dueDate) && !completed) {
       dueTag.classList.add("overdue");
       dueTag.textContent = `  Vencida: ${dueBR}`;
     } else {
-      dueTag.textContent = `  ${dueBR}`;
+      dueTag.textContent = `  Vencimento: ${dueBR}`;
     }
   }
 
@@ -853,26 +846,25 @@ function createTaskElement(text, completed = false, date = "", priority = "low",
           body: JSON.stringify({ completed: checkbox.checked })
         });
         if (dueTag && dueDate) {
-          const dueBR = dueDateToBR(dueDate);
-          if (isOverdue(dueDate) && !checkbox.checked) {
+          const dueBR = dueDateParaBR(dueDate);
+          if (estaVencida(dueDate) && !checkbox.checked) {
             dueTag.classList.add("overdue");
             dueTag.textContent = `  Vencida: ${dueBR}`;
           } else {
             dueTag.classList.remove("overdue");
-            dueTag.textContent = `  ${dueBR}`;
+            dueTag.textContent = `  Vencimento: ${dueBR}`;
           }
         }
       } catch (error) {
-        console.error("Error updating task:", error);
+        console.error("Erro ao atualizar tarefa:", error);
         li.classList.toggle("completed", !checkbox.checked);
         checkbox.checked = !checkbox.checked;
-        mostrarAlertaCentral("Error updating task. Please try again.");
+        mostrarAlerta("Erro ao atualizar tarefa. Tente novamente.");
         return;
       }
     }
-    salvarDoDOM();
-    updateCounter();
-    applyFilters();
+    atualizarContador();
+    aplicarFiltros();
   });
 
   const deleteBtn = document.createElement("button");
@@ -883,20 +875,18 @@ function createTaskElement(text, completed = false, date = "", priority = "low",
     if (!id) return;
     await fetch(`${API_URL}/${id}`, { method: "DELETE" });
     li.remove();
-    updateCounter();
+    atualizarContador();
   });
 
   li.append(deleteBtn);
   taskList.append(li);
-  updateCounter();
+  atualizarContador();
 }
 
-function salvarDoDOM() {}
-
-async function addTask() {
+async function adicionarTarefa() {
   const text = taskInput.value.trim();
   const priority = currentPriority;
-  const dueDate = dueDateToISO(dueDateInput.value.trim());
+  const dueDate = dueDateParaISO(dueDateInput.value.trim());
 
   if (!text) return;
 
@@ -915,18 +905,18 @@ async function addTask() {
     });
 
     if (res.ok) {
-      await loadTasks();
+      await carregarTarefas();
     } else {
-      mostrarAlertaCentral("Failed to save task. Please try again.");
+      mostrarAlerta("Falha ao salvar tarefa. Tente novamente.");
     }
   } catch (error) {
-    console.error("Connection error:", error);
-    mostrarAlertaCentral("Connection error. Task may not be saved.");
+    console.error("Erro de conexão:", error);
+    mostrarAlerta("Erro de conexão. A tarefa pode não ter sido salva.");
   }
 }
 
-addBtn.addEventListener("click", addTask);
-taskInput.addEventListener("keypress", e => { if (e.key === "Enter") addTask(); });
+addBtn.addEventListener("click", adicionarTarefa);
+taskInput.addEventListener("keypress", e => { if (e.key === "Enter") adicionarTarefa(); });
 
 const customConfirm = document.getElementById("customConfirm");
 const confirmYes = document.getElementById("confirmYes");
@@ -937,7 +927,7 @@ clearAllBtn.addEventListener("click", () => { customConfirm.style.display = "fle
 confirmYes.addEventListener("click", async () => {
   await fetch(API_URL, { method: "DELETE" });
   taskList.innerHTML = "";
-  updateCounter();
+  atualizarContador();
   customConfirm.style.display = "none";
 });
 
@@ -945,10 +935,10 @@ confirmNo.addEventListener("click", () => { customConfirm.style.display = "none"
 
 exportCSVBtn.addEventListener("click", async () => {
   const res = await fetch(API_URL);
-  const savedTasks = await res.json();
+  const tarefas = await res.json();
 
-  if (savedTasks.length === 0) {
-    mostrarAlertaCentral("No tasks to export!");
+  if (tarefas.length === 0) {
+    mostrarAlerta("Nenhuma tarefa para exportar!");
     return;
   }
 
@@ -956,28 +946,28 @@ exportCSVBtn.addEventListener("click", async () => {
   const doc = new jsPDF();
 
   doc.setFontSize(18);
-  doc.text("Tasks - To Do List", 14, 20);
+  doc.text("Tarefas - Lista de Tarefas", 14, 20);
   doc.setFontSize(12);
-  doc.text(`Exported on: ${new Date().toLocaleDateString("en-US")}`, 14, 30);
+  doc.text(`Exportado em: ${new Date().toLocaleDateString("pt-BR")}`, 14, 30);
 
   let y = 40;
 
-  savedTasks.forEach((t, i) => {
+  tarefas.forEach((t, i) => {
     doc.setFont("helvetica", "bold");
     doc.text(`${i + 1}. ${t.text}`, 14, y);
     doc.setFont("helvetica", "normal");
-    doc.text(`Status: ${t.completed ? "Completed" : "Pending"}`, 14, y + 6);
-    if (t.date)    doc.text(`Created: ${t.date}`, 14, y + 12);
-    if (t.dueDate) doc.text(`Due: ${dueDateToBR(t.dueDate)}`, 14, y + 18);
-    doc.text(`Priority: ${traduzirPrioridade[t.priority?.toLowerCase()] || t.priority}`, 14, y + 24);
+    doc.text(`Situação: ${t.completed ? "Concluída" : "Pendente"}`, 14, y + 6);
+    if (t.date)    doc.text(`Criada em: ${t.date}`, 14, y + 12);
+    if (t.dueDate) doc.text(`Vencimento: ${dueDateParaBR(t.dueDate)}`, 14, y + 18);
+    doc.text(`Prioridade: ${traduzirPrioridade[t.priority?.toLowerCase()] || t.priority}`, 14, y + 24);
     y += 32;
     if (y > 270) { doc.addPage(); y = 20; }
   });
 
-  doc.save("tasks.pdf");
+  doc.save("tarefas.pdf");
 });
 
-function mostrarAlertaCentral(mensagem) {
+function mostrarAlerta(mensagem) {
   const alerta = document.createElement("div");
   alerta.id = "alertaCentral";
   alerta.textContent = mensagem;
@@ -985,7 +975,7 @@ function mostrarAlertaCentral(mensagem) {
   setTimeout(() => alerta.remove(), 2500);
 }
 
-const traduzirPrioridade = { low: "LOW", medium: "MEDIUM", high: "HIGH" };
+const traduzirPrioridade = { low: "BAIXA", medium: "MÉDIA", high: "ALTA" };
 
 const searchInput = document.getElementById("searchInput");
 let searchTimeout;
@@ -996,13 +986,13 @@ searchInput.addEventListener("input", () => {
     const tarefas = document.querySelectorAll("#taskList li");
     tarefas.forEach(li => {
       const texto = li.querySelector(".task-text")?.textContent.toLowerCase() || "";
-      const data = li.querySelector("small")?.textContent.toLowerCase() || "";
+      const data  = li.querySelector("small")?.textContent.toLowerCase() || "";
       li.style.display = (texto.includes(termo) || data.includes(termo)) ? "" : "none";
     });
   }, 200);
 });
 
-window.addEventListener("load", loadTasks);
+window.addEventListener("load", carregarTarefas);
 </script>
 </body>
 </html>
